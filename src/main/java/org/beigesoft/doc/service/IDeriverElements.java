@@ -17,10 +17,11 @@ import org.beigesoft.doc.model.IDerivingElements;
 /**
  * <p>Abstraction of service that derives atomic elements.</p>
  *
+ * @param <WI> writing instrument type
  * @param <E> deriving elements type
  * @author Yury Demidenko
  */
-public interface IDeriverElements<E extends IDerivingElements> {
+public interface IDeriverElements<WI, E extends IDerivingElements<WI>> {
 
   /**
    * <p>Derives (generates) document atomic elements.</p>
@@ -28,4 +29,12 @@ public interface IDeriverElements<E extends IDerivingElements> {
    * @throws Exception an Exception
    **/
   void derive(E pDerivingEl) throws Exception;
+
+
+  /**
+   * <p>Init data after possible changes.</p>
+   * @param pDerivingEl IDerivingElements
+   * @throws Exception an Exception
+   **/
+  void initAfterChanges(E pDerivingEl) throws Exception;
 }

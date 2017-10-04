@@ -71,7 +71,7 @@ public interface IDocumentMaker<WI> {
    * @throws Exception an Exception
    **/
   void setFont(Document<WI> pDoc, int pFontNum,
-    float pFontSize) throws Exception;
+    double pFontSize) throws Exception;
 
   /**
    * <p>Set current font size.</p>
@@ -79,7 +79,7 @@ public interface IDocumentMaker<WI> {
    * @param pFontSize size
    * @throws Exception an Exception
    **/
-  void setFontSize(Document<WI> pDoc, float pFontSize) throws Exception;
+  void setFontSize(Document<WI> pDoc, double pFontSize) throws Exception;
 
   /**
    * <p>Add non-multiline text into current page with

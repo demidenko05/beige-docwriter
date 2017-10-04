@@ -21,11 +21,54 @@ package org.beigesoft.doc.model;
 public class DocRectangle<WI> extends AElement<DocRectangle<WI>, WI> {
 
   /**
+   * <p>Line width.</p>
+   **/
+  private double width;
+
+  /**
+   * <p>If fill.</p>
+   **/
+  private boolean isFill;
+
+  /**
    * <p>Getter for Index group for ordering.</p>
    * @return Index Group
    **/
   @Override
   public final int getIndexGroup() {
     return 2;
+  }
+
+  //Simple getters and setters:
+  /**
+   * <p>Getter for width.</p>
+   * @return double
+   **/
+  public final double getWidth() {
+    return this.width;
+  }
+
+  /**
+   * <p>Setter for width.</p>
+   * @param pWidth reference
+   **/
+  public final void setWidth(final double pWidth) {
+    this.width = pWidth;
+  }
+
+  /**
+   * <p>Getter for isFill.</p>
+   * @return boolean
+   **/
+  public final boolean getIsFill() {
+    return this.isFill;
+  }
+
+  /**
+   * <p>Setter for isFill.</p>
+   * @param pIsFill reference
+   **/
+  public final void setIsFill(final boolean pIsFill) {
+    this.isFill = pIsFill;
   }
 }

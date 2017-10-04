@@ -16,9 +16,10 @@ package org.beigesoft.doc.model;
  * <p>Abstraction of document's complex object that derive atomic elements,
  * e.g. Table derives many DocString, DocLine.</p>
  *
+ * @param <WI> writing instrument type
  * @author Yury Demidenko
  */
-public interface IDerivingElements extends IDocElement {
+public interface IDerivingElements<WI> extends IDocContainer {
 
   /**
    * <p>Derives (generates) document atomic elements.</p>
@@ -26,28 +27,34 @@ public interface IDerivingElements extends IDocElement {
    **/
   void derive() throws Exception;
 
+  /**
+   * <p>Init data after possible changes.</p>
+   * @throws Exception an Exception
+   **/
+  void initAfterChanges() throws Exception;
+
   // current context:
   /**
    * <p>Getter for start page.</p>
-   * @return DocPage<?>
+   * @return DocPage<WI>
    **/
-  DocPage<?> getStartPage();
+  DocPage<WI> getStartPage();
 
   /**
    * <p>Setter for start page.</p>
    * @param pPage reference
    **/
-  void setStartPage(DocPage<?> pPage);
+  void setStartPage(DocPage<WI> pPage);
 
   /**
    * <p>Getter for document.</p>
    * @return Document
    **/
-  Document<?> getDocument();
+  Document<WI> getDocument();
 
   /**
    * <p>Setter for document.</p>
    * @param pDocument reference
    **/
-  void setDocument(Document<?> pDocument);
+  void setDocument(Document<WI> pDocument);
 }

@@ -17,27 +17,28 @@ import org.beigesoft.doc.service.IDeriverElements;
 /**
  * <p>Deriving Elements base model.</p>
  *
+ * @param <WI> writing instrument type
  * @param <E> deriving elements type
  * @author Yury Demidenko
  */
-public abstract class ADerivingElements<E extends IDerivingElements>
-  extends ADocElement implements IDerivingElements {
+public abstract class ADerivingElements<WI, E extends IDerivingElements<WI>>
+  extends ADocContainer implements IDerivingElements<WI> {
 
   /**
    * <p>Deriver Elements service.</p>
    **/
-  private IDeriverElements<E> deriverElements;
+  private IDeriverElements<WI, E> deriverElements;
 
   //context:
   /**
    * <p>Page where element has started.</p>
    **/
-  private DocPage<?> startPage;
+  private DocPage<WI> startPage;
 
   /**
    * <p>PDF document.</p>
    **/
-  private Document<?> document;
+  private Document<WI> document;
 
   /**
    * <p>Derives (generates) document atomic elements.</p>
@@ -51,11 +52,22 @@ public abstract class ADerivingElements<E extends IDerivingElements>
   }
 
   /**
-   * <p>Getter for start page.</p>
-   * @return DocPage<?>
+   * <p>Derives (generates) document atomic elements.</p>
+   * @throws Exception an Exception
    **/
   @Override
-  public final DocPage<?> getStartPage() {
+  public final void initAfterChanges() throws Exception {
+    @SuppressWarnings("unchecked")
+    E de = (E) this;
+    this.deriverElements.initAfterChanges(de);
+  }
+
+  /**
+   * <p>Getter for start page.</p>
+   * @return DocPage<WI>
+   **/
+  @Override
+  public final DocPage<WI> getStartPage() {
     return this.startPage;
   }
 
@@ -64,7 +76,7 @@ public abstract class ADerivingElements<E extends IDerivingElements>
    * @param pPage reference
    **/
   @Override
-  public final void setStartPage(final DocPage<?> pPage) {
+  public final void setStartPage(final DocPage<WI> pPage) {
     this.startPage = pPage;
   }
 
@@ -73,7 +85,7 @@ public abstract class ADerivingElements<E extends IDerivingElements>
    * @return Document
    **/
   @Override
-  public final Document<?> getDocument() {
+  public final Document<WI> getDocument() {
     return this.document;
   }
 
@@ -83,7 +95,7 @@ public abstract class ADerivingElements<E extends IDerivingElements>
    **/
   @Override
   public final void setDocument(
-    final Document<?> pDocument) {
+    final Document<WI> pDocument) {
     this.document = pDocument;
   }
 
@@ -92,7 +104,7 @@ public abstract class ADerivingElements<E extends IDerivingElements>
    * <p>Getter for deriverElements.</p>
    * @return IDeriverElements<E>
    **/
-  public final IDeriverElements<E> getDeriverElements() {
+  public final IDeriverElements<WI, E> getDeriverElements() {
     return this.deriverElements;
   }
 
@@ -101,7 +113,7 @@ public abstract class ADerivingElements<E extends IDerivingElements>
    * @param pDeriverElements reference
    **/
   public final void setDeriverElements(
-    final IDeriverElements<E> pDeriverElements) {
+    final IDeriverElements<WI, E> pDeriverElements) {
     this.deriverElements = pDeriverElements;
   }
 }

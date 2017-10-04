@@ -13,24 +13,10 @@ package org.beigesoft.doc.model;
  */
 
 /**
- * <p>Align Vertical constants model.</p>
+ * <p>Document's table's column model.</p>
  *
  * @author Yury Demidenko
  */
-public enum EAlignVertical {
+public class TableColumn extends ADocContainer {
 
-  /**
-   * <p>Top.</p>
-   **/
-  TOP,
-
-  /**
-   * <p>Middle.</p>
-   **/
-  MIDDLE,
-
-  /**
-   * <p>Bottom.</p>
-   **/
-  BOTTOM;
 }

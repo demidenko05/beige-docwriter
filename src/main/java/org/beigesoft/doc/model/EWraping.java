@@ -13,24 +13,19 @@ package org.beigesoft.doc.model;
  */
 
 /**
- * <p>Align Vertical constants model.</p>
+ * <p>Container wraping constants model.</p>
  *
  * @author Yury Demidenko
  */
-public enum EAlignVertical {
+public enum EWraping {
 
   /**
-   * <p>Top.</p>
+   * <p>Wrap content.</p>
    **/
-  TOP,
+  WRAP_CONTENT,
 
   /**
-   * <p>Middle.</p>
+   * <p>Fill parent.</p>
    **/
-  MIDDLE,
-
-  /**
-   * <p>Bottom.</p>
-   **/
-  BOTTOM;
+  FILL_PARENT;
 }

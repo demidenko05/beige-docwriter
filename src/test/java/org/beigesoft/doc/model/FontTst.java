@@ -13,24 +13,27 @@ package org.beigesoft.doc.model;
  */
 
 /**
- * <p>Align Vertical constants model.</p>
+ * <p>Font test model.</p>
  *
  * @author Yury Demidenko
  */
-public enum EAlignVertical {
+public class FontTst implements IFont {
 
   /**
-   * <p>Top.</p>
+   * <p>Get if unicoded.</p>
+   * @return if unicoded
    **/
-  TOP,
+  @Override
+  public final boolean getIsUnicoded() {
+    return true;
+  }
 
   /**
-   * <p>Middle.</p>
+   * <p>Usually it's simple getter that return model name.</p>
+   * @return String model name
    **/
-  MIDDLE,
-
-  /**
-   * <p>Bottom.</p>
-   **/
-  BOTTOM;
+  @Override
+  public final String getItsName() {
+    return "test-font";
+  }
 }

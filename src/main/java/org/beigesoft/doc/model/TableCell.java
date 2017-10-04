@@ -12,6 +12,8 @@ package org.beigesoft.doc.model;
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
  */
 
+import java.util.List;
+
 /**
  * <p>Document's table's cell model.</p>
  *
@@ -22,20 +24,15 @@ public class TableCell extends ADocElement {
   /**
    * <p>Font number, overrides table one (from #1).</p>
    **/
-  private Integer fontNumber;
+  private int fontNumber;
 
   /**
    * <p>Font size, overrides table one.</p>
    **/
-  private Float fontSize;
+  private double fontSize;
 
   /**
-   * <p>Align Horizontal, overrides table one, NULL means LEFT.</p>
-   **/
-  private EAlignHorizontal alignHorizontal;
-
-  /**
-   * <p>Align Vertical, overrides table one, NULL means TOP.</p>
+   * <p>Align Vertical, overrides table one.</p>
    **/
   private EAlignVertical alignVertical;
 
@@ -45,16 +42,53 @@ public class TableCell extends ADocElement {
   private String itsContent;
 
   /**
-   * <p>Joined cell.</p>
+   * <p>Merged cell.</p>
    **/
-  private TableCell joinedCell;
+  private TableCell mergedCell;
+
+  /**
+   * <p>Merged cells list exclude this cell.</p>
+   **/
+  private List<TableCell> mergedCells;
+
+  /**
+   * <p>MetricsString from content.</p>
+   **/
+  private MetricsString multistring;
+
+  /**
+   * <p>If it is merged slave cell form master cell.</p>
+   **/
+  private boolean isMerged;
+
+  //to implements frequently used "filled by user cells marked underline"
+  //logic and others seldom ones:
+  /**
+   * <p>If show top border.</p>
+   **/
+  private boolean isNotShowBorderTop;
+
+  /**
+   * <p>If show bottom border.</p>
+   **/
+  private boolean isNotShowBorderBottom;
+
+  /**
+   * <p>If show left border.</p>
+   **/
+  private boolean isNotShowBorderLeft;
+
+  /**
+   * <p>If show right border.</p>
+   **/
+  private boolean isNotShowBorderRight;
 
   //Simple getters and setters:
   /**
    * <p>Getter for fontNumber.</p>
-   * @return Integer
+   * @return int
    **/
-  public final Integer getFontNumber() {
+  public final int getFontNumber() {
     return this.fontNumber;
   }
 
@@ -62,15 +96,15 @@ public class TableCell extends ADocElement {
    * <p>Setter for fontNumber.</p>
    * @param pFontNumber reference
    **/
-  public final void setFontNumber(final Integer pFontNumber) {
+  public final void setFontNumber(final int pFontNumber) {
     this.fontNumber = pFontNumber;
   }
 
   /**
    * <p>Getter for fontSize.</p>
-   * @return Float
+   * @return double
    **/
-  public final Float getFontSize() {
+  public final double getFontSize() {
     return this.fontSize;
   }
 
@@ -78,25 +112,8 @@ public class TableCell extends ADocElement {
    * <p>Setter for fontSize.</p>
    * @param pFontSize reference
    **/
-  public final void setFontSize(final Float pFontSize) {
+  public final void setFontSize(final double pFontSize) {
     this.fontSize = pFontSize;
-  }
-
-  /**
-   * <p>Getter for alignHorizontal.</p>
-   * @return EAlignHorizontal
-   **/
-  public final EAlignHorizontal getAlignHorizontal() {
-    return this.alignHorizontal;
-  }
-
-  /**
-   * <p>Setter for alignHorizontal.</p>
-   * @param pAlignHorizontal reference
-   **/
-  public final void setAlignHorizontal(
-    final EAlignHorizontal pAlignHorizontal) {
-    this.alignHorizontal = pAlignHorizontal;
   }
 
   /**
@@ -132,18 +149,135 @@ public class TableCell extends ADocElement {
   }
 
   /**
-   * <p>Getter for joinedCell.</p>
+   * <p>Getter for mergedCell.</p>
    * @return TableCell
    **/
-  public final TableCell getJoinedCell() {
-    return this.joinedCell;
+  public final TableCell getMergedCell() {
+    return this.mergedCell;
   }
 
   /**
-   * <p>Setter for joinedCell.</p>
-   * @param pJoinedCell reference
+   * <p>Setter for mergedCell.</p>
+   * @param pMergedCell reference
    **/
-  public final void setJoinedCell(final TableCell pJoinedCell) {
-    this.joinedCell = pJoinedCell;
+  public final void setMergedCell(final TableCell pMergedCell) {
+    this.mergedCell = pMergedCell;
+  }
+
+
+  /**
+   * <p>Getter for mergedCells.</p>
+   * @return List<TableCell>
+   **/
+  public final List<TableCell> getMergedCells() {
+    return this.mergedCells;
+  }
+
+  /**
+   * <p>Setter for mergedCells.</p>
+   * @param pMergedCells reference
+   **/
+  public final void setMergedCells(final List<TableCell> pMergedCells) {
+    this.mergedCells = pMergedCells;
+  }
+
+  /**
+   * <p>Getter for isMerged.</p>
+   * @return boolean
+   **/
+  public final boolean getIsMerged() {
+    return this.isMerged;
+  }
+
+  /**
+   * <p>Setter for isMerged.</p>
+   * @param pIsMerged reference
+   **/
+  public final void setIsMerged(final boolean pIsMerged) {
+    this.isMerged = pIsMerged;
+  }
+
+  /**
+   * <p>Getter for multistring.</p>
+   * @return MetricsString
+   **/
+  public final MetricsString getMetricsString() {
+    return this.multistring;
+  }
+
+  /**
+   * <p>Setter for multistring.</p>
+   * @param pMetricsString reference
+   **/
+  public final void setMetricsString(final MetricsString pMetricsString) {
+    this.multistring = pMetricsString;
+  }
+
+  /**
+   * <p>Getter for isNotShowBorderTop.</p>
+   * @return boolean
+   **/
+  public final boolean getIsNotShowBorderTop() {
+    return this.isNotShowBorderTop;
+  }
+
+  /**
+   * <p>Setter for isNotShowBorderTop.</p>
+   * @param pIsNotShowBorderTop reference
+   **/
+  public final void setIsNotShowBorderTop(
+    final boolean pIsNotShowBorderTop) {
+    this.isNotShowBorderTop = pIsNotShowBorderTop;
+  }
+
+  /**
+   * <p>Getter for isNotShowBorderBottom.</p>
+   * @return boolean
+   **/
+  public final boolean getIsNotShowBorderBottom() {
+    return this.isNotShowBorderBottom;
+  }
+
+  /**
+   * <p>Setter for isNotShowBorderBottom.</p>
+   * @param pIsNotShowBorderBottom reference
+   **/
+  public final void setIsNotShowBorderBottom(
+    final boolean pIsNotShowBorderBottom) {
+    this.isNotShowBorderBottom = pIsNotShowBorderBottom;
+  }
+
+  /**
+   * <p>Getter for isNotShowBorderLeft.</p>
+   * @return boolean
+   **/
+  public final boolean getIsNotShowBorderLeft() {
+    return this.isNotShowBorderLeft;
+  }
+
+  /**
+   * <p>Setter for isNotShowBorderLeft.</p>
+   * @param pIsNotShowBorderLeft reference
+   **/
+  public final void setIsNotShowBorderLeft(
+    final boolean pIsNotShowBorderLeft) {
+    this.isNotShowBorderLeft = pIsNotShowBorderLeft;
+  }
+
+  /**
+   * <p>Getter for isNotShowBorderRight.</p>
+   * @return boolean
+   **/
+  public final boolean getIsNotShowBorderRight() {
+    return this.isNotShowBorderRight;
+  }
+
+  /**
+   * <p>Setter for isNotShowBorderRight.</p>
+   * @param pIsNotShowBorderRight reference
+   **/
+  public final void setIsNotShowBorderRight(
+    final boolean pIsNotShowBorderRight) {
+    this.isNotShowBorderRight = pIsNotShowBorderRight;
   }
 }

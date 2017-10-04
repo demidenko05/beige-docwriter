@@ -145,7 +145,7 @@ public class DocumentMaker<WI> implements IDocumentMaker<WI> {
    **/
   @Override
   public final void setFont(final Document<WI> pDoc, final int pFontNum,
-    final float pFontSize) throws Exception {
+    final double pFontSize) throws Exception {
     if (pDoc.getFonts().size() < pFontNum) {
        throw new ExceptionBdw("Add font first!");
     }
@@ -161,7 +161,7 @@ public class DocumentMaker<WI> implements IDocumentMaker<WI> {
    **/
   @Override
   public final void setFontSize(final Document<WI> pDoc,
-    final float pFontSize) throws Exception {
+    final double pFontSize) throws Exception {
     if (pFontSize <= 0.0f || pFontSize > pDoc.getPages()
       .get(pDoc.getPageNumber() - 1).getWidth() * 0.8) {
        throw new ExceptionBdw("Wrong font size!");
@@ -190,9 +190,10 @@ public class DocumentMaker<WI> implements IDocumentMaker<WI> {
     }
     DocString<WI> dstr = this.elementFactory.createDocString();
     dstr.setValue(pString);
-    dstr.setX1(pX);
-    dstr.setY1(pY);
     dstr.setFontSize(pDoc.getFontSize());
+    dstr.setX1(pX);
+    dstr.setY1(pY - dstr.getFontSize());
+    dstr.setY2(pY);
     dstr.setFontNumber(pDoc.getFontNumber());
     pDoc.getPages().get(pDoc.getPageNumber() - 1).getElements().add(dstr);
   }

@@ -96,6 +96,17 @@ public class FctDocument<WI> implements IFctDocument<WI> {
     pg1.setElements(new ArrayList<IElement<WI>>());
     pg1.setWidth(pWidth);
     pg1.setHeight(pHeight);
+    if (EUnitOfMeasure.INCH.equals(pUom)) {
+      pg1.setMarginBottom(0.79);
+      pg1.setMarginTop(0.79);
+      pg1.setMarginLeft(0.79);
+      pg1.setMarginRight(0.79);
+    } else if (EUnitOfMeasure.MILLIMETRE.equals(pUom)) {
+      pg1.setMarginBottom(20.0);
+      pg1.setMarginTop(20.0);
+      pg1.setMarginLeft(30.0);
+      pg1.setMarginRight(15.0);
+    }
     doc.getPages().add(pg1);
     doc.setPageNumber(1);
     return doc;

@@ -17,29 +17,20 @@ import java.util.List;
 /**
  * <p>Document table model.</p>
  *
+ * @param <WI> writing instrument type
  * @author Yury Demidenko
  */
-public class DocTable extends ADerivingElements<DocTable> {
+public class DocTable<WI> extends ADerivingElements<WI, DocTable<WI>> {
 
   /**
-   * <p>Font number overrides base (from #1).</p>
+   * <p>Font number base (from #1).</p>
    **/
-  private Integer fontNumber;
+  private int fontNumber;
 
   /**
-   * <p>Font size overrides base.</p>
+   * <p>Font size base.</p>
    **/
-  private Float fontSize;
-
-  /**
-   * <p>Columns count.</p>
-   **/
-  private int columnsCount;
-
-  /**
-   * <p>Rows count.</p>
-   **/
-  private int rowsCount;
+  private double fontSize;
 
   /**
    * <p>Cells.</p>
@@ -47,27 +38,42 @@ public class DocTable extends ADerivingElements<DocTable> {
   private List<TableCell> itsCells;
 
   /**
-   * <p>Align Horizontal base, NULL means LEFT.</p>
+   * <p>Rows.</p>
    **/
-  private EAlignHorizontal alignHorizontal;
+  private List<TableRow> itsRows;
 
   /**
-   * <p>Align Vertical base, NULL means TOP.</p>
+   * <p>Columns.</p>
    **/
-  private EAlignVertical alignVertical;
+  private List<TableColumn> itsColumns;
 
   /**
-   * <p>Border width, usually equivalent to 1 dot,
-   * 0 means no border.</p>
+   * <p>Align Horizontal content base.</p>
    **/
-  private double border;
+  private EAlignHorizontal alignHoriCont = EAlignHorizontal.LEFT;
+
+  /**
+   * <p>Align Vertical content base.</p>
+   **/
+  private EAlignVertical alignVertCont = EAlignVertical.TOP;
+
+  /**
+   * <p>If repeat table head on every page.</p>
+   **/
+  private boolean isRepeatHead;
+
+  /**
+   * <p>If there is cell(s) with custom border. For example border shown only
+   * at bottom for cells that user enters data.</p>
+   **/
+  private boolean isThereCellWithCustomBorder;
 
   //Simple getters and setters:
   /**
    * <p>Getter for fontNumber.</p>
-   * @return Integer
+   * @return int
    **/
-  public final Integer getFontNumber() {
+  public final int getFontNumber() {
     return this.fontNumber;
   }
 
@@ -75,15 +81,15 @@ public class DocTable extends ADerivingElements<DocTable> {
    * <p>Setter for fontNumber.</p>
    * @param pFontNumber reference
    **/
-  public final void setFontNumber(final Integer pFontNumber) {
+  public final void setFontNumber(final int pFontNumber) {
     this.fontNumber = pFontNumber;
   }
 
   /**
    * <p>Getter for fontSize.</p>
-   * @return Float
+   * @return double
    **/
-  public final Float getFontSize() {
+  public final double getFontSize() {
     return this.fontSize;
   }
 
@@ -91,40 +97,8 @@ public class DocTable extends ADerivingElements<DocTable> {
    * <p>Setter for fontSize.</p>
    * @param pFontSize reference
    **/
-  public final void setFontSize(final Float pFontSize) {
+  public final void setFontSize(final double pFontSize) {
     this.fontSize = pFontSize;
-  }
-
-  /**
-   * <p>Getter for columnsCount.</p>
-   * @return int
-   **/
-  public final int getColumnsCount() {
-    return this.columnsCount;
-  }
-
-  /**
-   * <p>Setter for columnsCount.</p>
-   * @param pColumnsCount reference
-   **/
-  public final void setColumnsCount(final int pColumnsCount) {
-    this.columnsCount = pColumnsCount;
-  }
-
-  /**
-   * <p>Getter for rowsCount.</p>
-   * @return int
-   **/
-  public final int getRowsCount() {
-    return this.rowsCount;
-  }
-
-  /**
-   * <p>Setter for rowsCount.</p>
-   * @param pRowsCount reference
-   **/
-  public final void setRowsCount(final int pRowsCount) {
-    this.rowsCount = pRowsCount;
   }
 
   /**
@@ -144,51 +118,99 @@ public class DocTable extends ADerivingElements<DocTable> {
   }
 
   /**
-   * <p>Getter for alignHorizontal.</p>
+   * <p>Getter for itsRows.</p>
+   * @return List<TableRow>
+   **/
+  public final List<TableRow> getItsRows() {
+    return this.itsRows;
+  }
+
+  /**
+   * <p>Setter for itsRows.</p>
+   * @param pItsRows reference
+   **/
+  public final void setItsRows(final List<TableRow> pItsRows) {
+    this.itsRows = pItsRows;
+  }
+
+  /**
+   * <p>Getter for itsColumns.</p>
+   * @return List<TableColumn>
+   **/
+  public final List<TableColumn> getItsColumns() {
+    return this.itsColumns;
+  }
+
+  /**
+   * <p>Setter for itsColumns.</p>
+   * @param pItsColumns reference
+   **/
+  public final void setItsColumns(final List<TableColumn> pItsColumns) {
+    this.itsColumns = pItsColumns;
+  }
+
+  /**
+   * <p>Getter for alignHoriCont.</p>
    * @return EAlignHorizontal
    **/
-  public final EAlignHorizontal getAlignHorizontal() {
-    return this.alignHorizontal;
+  public final EAlignHorizontal getAlignHoriCont() {
+    return this.alignHoriCont;
   }
 
   /**
-   * <p>Setter for alignHorizontal.</p>
-   * @param pAlignHorizontal reference
+   * <p>Setter for alignHoriCont.</p>
+   * @param pAlignHoriCont reference
    **/
-  public final void setAlignHorizontal(
-    final EAlignHorizontal pAlignHorizontal) {
-    this.alignHorizontal = pAlignHorizontal;
+  public final void setAlignHoriCont(final EAlignHorizontal pAlignHoriCont) {
+    this.alignHoriCont = pAlignHoriCont;
   }
 
   /**
-   * <p>Getter for alignVertical.</p>
+   * <p>Getter for alignVertCont.</p>
    * @return EAlignVertical
    **/
-  public final EAlignVertical getAlignVertical() {
-    return this.alignVertical;
+  public final EAlignVertical getAlignVertCont() {
+    return this.alignVertCont;
   }
 
   /**
-   * <p>Setter for alignVertical.</p>
-   * @param pAlignVertical reference
+   * <p>Setter for alignVertCont.</p>
+   * @param pAlignVertCont reference
    **/
-  public final void setAlignVertical(final EAlignVertical pAlignVertical) {
-    this.alignVertical = pAlignVertical;
+  public final void setAlignVertCont(final EAlignVertical pAlignVertCont) {
+    this.alignVertCont = pAlignVertCont;
   }
 
   /**
-   * <p>Getter for border.</p>
-   * @return double
+   * <p>Getter for isRepeatHead.</p>
+   * @return boolean
    **/
-  public final double getBorder() {
-    return this.border;
+  public final boolean getIsRepeatHead() {
+    return this.isRepeatHead;
   }
 
   /**
-   * <p>Setter for border.</p>
-   * @param pBorder reference
+   * <p>Setter for isRepeatHead.</p>
+   * @param pIsRepeatHead reference
    **/
-  public final void setBorder(final double pBorder) {
-    this.border = pBorder;
+  public final void setIsRepeatHead(final boolean pIsRepeatHead) {
+    this.isRepeatHead = pIsRepeatHead;
+  }
+
+  /**
+   * <p>Getter for isThereCellWithCustomBorder.</p>
+   * @return boolean
+   **/
+  public final boolean getIsThereCellWithCustomBorder() {
+    return this.isThereCellWithCustomBorder;
+  }
+
+  /**
+   * <p>Setter for isThereCellWithCustomBorder.</p>
+   * @param pIsThereCellWithCustomBorder reference
+   **/
+  public final void setIsThereCellWithCustomBorder(
+    final boolean pIsThereCellWithCustomBorder) {
+    this.isThereCellWithCustomBorder = pIsThereCellWithCustomBorder;
   }
 }

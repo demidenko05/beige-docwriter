@@ -62,7 +62,7 @@ public class Document<WI> {
   /**
    * <p>Current font size.</p>
    **/
-  private float fontSize;
+  private double fontSize;
 
   //Simple getters and setters:
   /**
@@ -148,9 +148,9 @@ public class Document<WI> {
 
   /**
    * <p>Getter for fontSize.</p>
-   * @return float
+   * @return double
    **/
-  public final float getFontSize() {
+  public final double getFontSize() {
     return this.fontSize;
   }
 
@@ -158,7 +158,7 @@ public class Document<WI> {
    * <p>Setter for fontSize.</p>
    * @param pFontSize reference
    **/
-  public final void setFontSize(final float pFontSize) {
+  public final void setFontSize(final double pFontSize) {
     this.fontSize = pFontSize;
   }
 

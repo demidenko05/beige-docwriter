@@ -28,7 +28,7 @@ public class DocString<WI> extends AElement<DocString<WI>, WI> {
   /**
    * <p>Font size.</p>
    **/
-  private float fontSize;
+  private double fontSize;
 
   /**
    * <p>Value.</p>
@@ -65,7 +65,7 @@ public class DocString<WI> extends AElement<DocString<WI>, WI> {
    * <p>Getter for fontSize.</p>
    * @return int
    **/
-  public final float getFontSize() {
+  public final double getFontSize() {
     return this.fontSize;
   }
 
@@ -73,7 +73,7 @@ public class DocString<WI> extends AElement<DocString<WI>, WI> {
    * <p>Setter for fontSize.</p>
    * @param pFontSize reference
    **/
-  public final void setFontSize(final float pFontSize) {
+  public final void setFontSize(final double pFontSize) {
     this.fontSize = pFontSize;
   }
 

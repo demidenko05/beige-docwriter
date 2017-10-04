@@ -53,4 +53,32 @@ public class UomHelper {
     return BigDecimal.valueOf(result)
       .setScale(2, RoundingMode.HALF_UP).doubleValue();
   }
+
+  /**
+   * <p>Convert value from points to user UOM,
+   * e.g. convert boder in 1 point to current UOM.</p>
+   * @param pDocDpi document dots per inch resolution
+   * @param pValue in user UOM
+   * @param pUom user UOM
+   * @return in document points value
+   **/
+  public final double fromPoints(final double pValue, final double pDocDpi,
+    final EUnitOfMeasure pUom) {
+    double result;
+    switch (pUom) {
+      case POINT:
+      result = pValue;
+      break;
+      case INCH:
+      result = pValue / pDocDpi;
+      break;
+      case CENTIMETRE:
+      result = pValue * 2.54 / pDocDpi;
+      break;
+      // millimetre:
+      default:
+      result = pValue * 25.4 / pDocDpi;
+    }
+    return result;
+  }
 }
