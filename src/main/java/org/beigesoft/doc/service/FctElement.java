@@ -15,6 +15,7 @@ package org.beigesoft.doc.service;
 import org.beigesoft.doc.model.DocString;
 import org.beigesoft.doc.model.DocLine;
 import org.beigesoft.doc.model.DocRectangle;
+import org.beigesoft.doc.model.IDerivingElements;
 
 /**
  * <p>Service that creates document's element.</p>
@@ -41,37 +42,46 @@ public class FctElement<WI> implements IFctElement<WI> {
 
   /**
    * <p>Create document string.</p>
+   * @param pParent parent
    * @return DocString
    * @throws Exception an Exception
    **/
   @Override
-  public final DocString<WI> createDocString() throws Exception {
+  public final DocString<WI> createDocString(
+    final IDerivingElements pParent) throws Exception {
     DocString<WI> res = new DocString<WI>();
     res.setWriter(this.writerString);
+    res.setParent(pParent);
     return res;
   }
 
   /**
    * <p>Create document line.</p>
+   * @param pParent parent
    * @return DocLine
    * @throws Exception an Exception
    **/
   @Override
-  public final DocLine<WI> createDocLine() throws Exception {
+  public final DocLine<WI> createDocLine(
+    final IDerivingElements pParent) throws Exception {
     DocLine<WI> res = new DocLine<WI>();
     res.setWriter(this.writerLine);
+    res.setParent(pParent);
     return res;
   }
 
   /**
    * <p>Create document rectangle.</p>
+   * @param pParent parent
    * @return DocRectangle
    * @throws Exception an Exception
    **/
   @Override
-  public final DocRectangle<WI> createDocRectangle() throws Exception {
+  public final DocRectangle<WI> createDocRectangle(
+    final IDerivingElements pParent) throws Exception {
     DocRectangle<WI> res = new DocRectangle<WI>();
     res.setWriter(this.writerRectangle);
+    res.setParent(pParent);
     return res;
   }
 

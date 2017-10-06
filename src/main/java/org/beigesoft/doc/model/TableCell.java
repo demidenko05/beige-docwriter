@@ -54,7 +54,7 @@ public class TableCell extends ADocElement {
   /**
    * <p>MetricsString from content.</p>
    **/
-  private MetricsString multistring;
+  private MetricsString metricsString;
 
   /**
    * <p>If it is merged slave cell form master cell.</p>
@@ -198,19 +198,19 @@ public class TableCell extends ADocElement {
   }
 
   /**
-   * <p>Getter for multistring.</p>
+   * <p>Getter for metricsString.</p>
    * @return MetricsString
    **/
   public final MetricsString getMetricsString() {
-    return this.multistring;
+    return this.metricsString;
   }
 
   /**
-   * <p>Setter for multistring.</p>
+   * <p>Setter for metricsString.</p>
    * @param pMetricsString reference
    **/
   public final void setMetricsString(final MetricsString pMetricsString) {
-    this.multistring = pMetricsString;
+    this.metricsString = pMetricsString;
   }
 
   /**

@@ -106,6 +106,10 @@ public class FctDocument<WI> implements IFctDocument<WI> {
       pg1.setMarginTop(20.0);
       pg1.setMarginLeft(30.0);
       pg1.setMarginRight(15.0);
+      doc.setContainerMarginBottom(3.5);
+      doc.setContentPadding(1);
+      doc.setBorder(0.33);
+      doc.setFontSize(3.5);
     }
     doc.getPages().add(pg1);
     doc.setPageNumber(1);

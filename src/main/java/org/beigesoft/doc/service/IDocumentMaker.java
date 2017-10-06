@@ -13,6 +13,7 @@ package org.beigesoft.doc.service;
  */
 
 import org.beigesoft.doc.model.Document;
+import org.beigesoft.doc.model.DocTable;
 import org.beigesoft.doc.model.EPageSize;
 import org.beigesoft.doc.model.EPageOrientation;
 
@@ -92,6 +93,50 @@ public interface IDocumentMaker<WI> {
    **/
   void addString(Document<WI> pDoc, String pString,
     double pX, double pY) throws Exception;
+
+  /**
+   * <p>Add simple document table with preferred padding/border
+   * to current page.</p>
+   * @param pDoc document
+   * @param pColumns total
+   * @param pRows total
+   * @return DocTable
+   * @throws Exception an Exception
+   **/
+  DocTable<WI> addDocTable(Document<WI> pDoc,
+    int pColumns, int pRows) throws Exception;
+
+
+  /**
+   * <p>Add simple document table with preferred padding and custom border
+   * to current page. User himself will decide which/how cell show border.</p>
+   * @param pDoc document
+   * @param pColumns total
+   * @param pRows total
+   * @return DocTable
+   * @throws Exception an Exception
+   **/
+  DocTable<WI> addDocTableCustomBorder(Document<WI> pDoc,
+    int pColumns, int pRows) throws Exception;
+
+  /**
+   * <p>Add simple document table with preferred padding and no border
+   * to current page.</p>
+   * @param pDoc document
+   * @param pColumns total
+   * @param pRows total
+   * @return DocTable
+   * @throws Exception an Exception
+   **/
+  DocTable<WI> addDocTableNoBorder(Document<WI> pDoc,
+    int pColumns, int pRows) throws Exception;
+
+  /**
+   * <p>Make DocTable wrapping content.</p>
+   * @param pTbl document table
+   * @throws Exception an Exception
+   **/
+  void makeDocTableWrapping(DocTable<WI> pTbl) throws Exception;
 
   /**
    * <p>Derives elements.</p>

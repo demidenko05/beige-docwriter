@@ -275,14 +275,14 @@ public interface IDocContainer extends IDocElement {
   void setIsWidthFixed(boolean pIsWidthFixed);
 
   /**
-   * <p>Getter for isWidthInPercentage.</p>
+   * <p>Getter for widthInPercentage.</p>
    * @return boolean
    **/
-  boolean getIsWidthInPercentage();
+  double getWidthInPercentage();
 
   /**
-   * <p>Setter for isWidthInPercentage.</p>
-   * @param pIsWidthInPercentage reference
+   * <p>Setter for widthInPercentage.</p>
+   * @param pWidthInPercentage reference
    **/
-  void setIsWidthInPercentage(boolean pIsWidthInPercentage);
+  void setWidthInPercentage(double pWidthInPercentage);
 }

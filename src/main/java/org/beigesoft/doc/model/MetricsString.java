@@ -37,6 +37,11 @@ public class MetricsString {
    **/
   private List<String> strings = new ArrayList<String>();
 
+  /**
+   * <p>Strings widths.</p>
+   **/
+  private List<Double> widths = new ArrayList<Double>();
+
   //Simple getters and setters:
   /**
    * <p>Getter for width.</p>
@@ -84,5 +89,21 @@ public class MetricsString {
    **/
   public final void setStrings(final List<String> pStrings) {
     this.strings = pStrings;
+  }
+
+  /**
+   * <p>Getter for widths.</p>
+   * @return List<Double>
+   **/
+  public final List<Double> getWidths() {
+    return this.widths;
+  }
+
+  /**
+   * <p>Setter for widths.</p>
+   * @param pWidths reference
+   **/
+  public final void setWidths(final List<Double> pWidths) {
+    this.widths = pWidths;
   }
 }

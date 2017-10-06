@@ -20,7 +20,7 @@ package org.beigesoft.doc.service;
 public class EvalCharWidthTst implements IEvalCharWidth {
 
   /**
-   * <p>Return just monospace width 600.</p>
+   * <p>Return just mono-space width 60% of font size.</p>
    * @param pSource char
    * @param pFntNm font name
    * @param pFntSize font size

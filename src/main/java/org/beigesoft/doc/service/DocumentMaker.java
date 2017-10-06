@@ -21,7 +21,11 @@ import java.nio.charset.CharsetEncoder;
 import org.beigesoft.doc.exception.ExceptionBdw;
 import org.beigesoft.doc.model.EPageSize;
 import org.beigesoft.doc.model.EPageOrientation;
+import org.beigesoft.doc.model.EWraping;
 import org.beigesoft.doc.model.Document;
+import org.beigesoft.doc.model.DocTable;
+import org.beigesoft.doc.model.TableCell;
+import org.beigesoft.doc.model.TableColumn;
 import org.beigesoft.doc.model.IElement;
 import org.beigesoft.doc.model.DocPage;
 import org.beigesoft.doc.model.DocString;
@@ -41,6 +45,11 @@ public class DocumentMaker<WI> implements IDocumentMaker<WI> {
   private IFctElement<WI> elementFactory;
 
   /**
+   * <p>DocTable factory.</p>
+   **/
+  private IFctDocTable<WI> docTableFactory;
+
+  /**
    * <p>Standard Charset Encoder.</p>
    **/
   private final CharsetEncoder charsetEncoder =
@@ -55,7 +64,16 @@ public class DocumentMaker<WI> implements IDocumentMaker<WI> {
   @Override
   public final void addPage(final Document<WI> pDoc) throws Exception {
     DocPage<WI> lpg = pDoc.getPages().get(pDoc.getPages().size() - 1);
-    addPage(pDoc, lpg.getWidth(), lpg.getHeight());
+    DocPage<WI> pg = new DocPage<WI>();
+    pg.setElements(new ArrayList<IElement<WI>>());
+    pg.setWidth(lpg.getWidth());
+    pg.setHeight(lpg.getHeight());
+    pg.setMarginBottom(lpg.getMarginBottom());
+    pg.setMarginTop(lpg.getMarginTop());
+    pg.setMarginLeft(lpg.getMarginLeft());
+    pg.setMarginRight(lpg.getMarginRight());
+    pDoc.getPages().add(pg);
+    pDoc.setPageNumber(pDoc.getPages().size());
   }
 
   /**
@@ -188,7 +206,7 @@ public class DocumentMaker<WI> implements IDocumentMaker<WI> {
         && !this.charsetEncoder.canEncode(pString)) {
       throw new ExceptionBdw("This string required unicode font!");
     }
-    DocString<WI> dstr = this.elementFactory.createDocString();
+    DocString<WI> dstr = this.elementFactory.createDocString(null);
     dstr.setValue(pString);
     dstr.setFontSize(pDoc.getFontSize());
     dstr.setX1(pX);
@@ -196,6 +214,89 @@ public class DocumentMaker<WI> implements IDocumentMaker<WI> {
     dstr.setY2(pY);
     dstr.setFontNumber(pDoc.getFontNumber());
     pDoc.getPages().get(pDoc.getPageNumber() - 1).getElements().add(dstr);
+  }
+
+  /**
+   * <p>Add simple document table with preferred padding/border
+   * to current page.</p>
+   * @param pDoc document
+   * @param pColumns total
+   * @param pRows total
+   * @return DocTable
+   * @throws Exception an Exception
+   **/
+  @Override
+  public final DocTable<WI> addDocTable(final Document<WI> pDoc,
+    final int pColumns, final int pRows) throws Exception {
+    if (pDoc.getFonts().size() == 0) {
+       throw new ExceptionBdw("Add font first!");
+    }
+    return this.docTableFactory.createDocTable(pDoc, pColumns, pRows);
+  }
+
+  /**
+   * <p>Add simple document table with preferred padding and custom border
+   * to current page. User himself will decide which/how cell show border.</p>
+   * @param pDoc document
+   * @param pColumns total
+   * @param pRows total
+   * @return DocTable
+   * @throws Exception an Exception
+   **/
+  @Override
+  public final DocTable<WI> addDocTableCustomBorder(final Document<WI> pDoc,
+    final int pColumns, final int pRows) throws Exception {
+    if (pDoc.getFonts().size() == 0) {
+       throw new ExceptionBdw("Add font first!");
+    }
+    DocTable<WI> res = this.docTableFactory
+      .createDocTable(pDoc, pColumns, pRows);
+    for (TableCell cel : res.getItsCells()) {
+      cel.setIsNotShowBorderBottom(false);
+      cel.setIsNotShowBorderTop(false);
+      cel.setIsNotShowBorderLeft(false);
+      cel.setIsNotShowBorderRight(false);
+    }
+    res.setIsThereCellWithCustomBorder(true);
+    return res;
+  }
+
+  /**
+   * <p>Add simple document table with preferred padding and no border
+   * to current page.</p>
+   * @param pDoc document
+   * @param pColumns total
+   * @param pRows total
+   * @return DocTable
+   * @throws Exception an Exception
+   **/
+  @Override
+  public final DocTable<WI> addDocTableNoBorder(final Document<WI> pDoc,
+    final int pColumns, final int pRows) throws Exception {
+    if (pDoc.getFonts().size() == 0) {
+       throw new ExceptionBdw("Add font first!");
+    }
+    double bordWas = pDoc.getBorder();
+    pDoc.setBorder(0.0);
+    DocTable<WI> rez = this.docTableFactory
+      .createDocTable(pDoc, pColumns, pRows);
+    pDoc.setBorder(bordWas);
+    return rez;
+  }
+
+
+  /**
+   * <p>Make DocTable wrapping content.</p>
+   * @param pTbl document table
+   * @throws Exception an Exception
+   **/
+  @Override
+  public final void makeDocTableWrapping(
+    final DocTable<WI> pTbl) throws Exception {
+    pTbl.setWraping(EWraping.WRAP_CONTENT);
+    for (TableColumn col : pTbl.getItsColumns()) {
+      col.setWraping(EWraping.WRAP_CONTENT);
+    }
   }
 
   /**
@@ -234,8 +335,26 @@ public class DocumentMaker<WI> implements IDocumentMaker<WI> {
    * <p>Setter for elementFactory.</p>
    * @param pElementFactory reference
    **/
-  public final void setElementFactory(final IFctElement<WI> pElementFactory) {
+  public final void setElementFactory(
+    final IFctElement<WI> pElementFactory) {
     this.elementFactory = pElementFactory;
+  }
+
+  /**
+   * <p>Getter for docTableFactory.</p>
+   * @return IFctDocTable<WI>
+   **/
+  public final IFctDocTable<WI> getDocTableFactory() {
+    return this.docTableFactory;
+  }
+
+  /**
+   * <p>Setter for docTableFactory.</p>
+   * @param pDocTableFactory reference
+   **/
+  public final void setDocTableFactory(
+    final IFctDocTable<WI> pDocTableFactory) {
+    this.docTableFactory = pDocTableFactory;
   }
 
   /**

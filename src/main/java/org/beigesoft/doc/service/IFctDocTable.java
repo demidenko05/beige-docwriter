@@ -14,7 +14,6 @@ package org.beigesoft.doc.service;
 
 import org.beigesoft.doc.model.DocTable;
 import org.beigesoft.doc.model.Document;
-import org.beigesoft.doc.model.DocPage;
 
 /**
  * <p>Abstraction of service that creates document's DocTable.</p>
@@ -27,15 +26,11 @@ public interface IFctDocTable<WI> {
   /**
    * <p>Create document table.</p>
    * @param pDoc document
-   * @param pStartPg page
-   * @param pRows total
    * @param pColumns total
-   * @param pBorder Border, 0 means NO
-   * @param pPadding padding
+   * @param pRows total
    * @return DocTable
    * @throws Exception an Exception
    **/
   DocTable<WI> createDocTable(Document<WI> pDoc,
-    DocPage<WI> pStartPg, int pRows, int pColumns,
-      double pBorder, double pPadding) throws Exception;
+    int pColumns, int pRows) throws Exception;
 }

@@ -28,34 +28,34 @@ public class DocPage<WI> {
   private List<IElement<WI>> elements;
 
   /**
-   * <p>Width if NULL then like HTML, but during rendering not null.</p>
+   * <p>Widthdouble, but during rendering not null.</p>
    **/
-  private Double width;
+  private double width;
 
   /**
-   * <p>Height if NULL then like HTML.</p>
+   * <p>Heightdouble.</p>
    **/
-  private Double height;
+  private double height;
 
   /**
-   * <p>Margin Left if NULL then like HTML.</p>
+   * <p>Margin Leftdouble.</p>
    **/
-  private Double marginLeft;
+  private double marginLeft;
 
   /**
-   * <p>Margin Right if NULL then like HTML.</p>
+   * <p>Margin Rightdouble.</p>
    **/
-  private Double marginRight;
+  private double marginRight;
 
   /**
-   * <p>Margin Top if NULL then like HTML.</p>
+   * <p>Margin Topdouble.</p>
    **/
-  private Double marginTop;
+  private double marginTop;
 
   /**
-   * <p>Margin Bottom if NULL then like HTML.</p>
+   * <p>Margin Bottomdouble.</p>
    **/
-  private Double marginBottom;
+  private double marginBottom;
 
   /**
    * <p>Font number base (from #1).</p>
@@ -86,9 +86,9 @@ public class DocPage<WI> {
 
   /**
    * <p>Getter for width.</p>
-   * @return Double
+   * @return double
    **/
-  public final Double getWidth() {
+  public final double getWidth() {
     return this.width;
   }
 
@@ -96,15 +96,15 @@ public class DocPage<WI> {
    * <p>Setter for width.</p>
    * @param pWidth reference
    **/
-  public final void setWidth(final Double pWidth) {
+  public final void setWidth(final double pWidth) {
     this.width = pWidth;
   }
 
   /**
    * <p>Getter for height.</p>
-   * @return Double
+   * @return double
    **/
-  public final Double getHeight() {
+  public final double getHeight() {
     return this.height;
   }
 
@@ -112,15 +112,15 @@ public class DocPage<WI> {
    * <p>Setter for height.</p>
    * @param pHeight reference
    **/
-  public final void setHeight(final Double pHeight) {
+  public final void setHeight(final double pHeight) {
     this.height = pHeight;
   }
 
   /**
    * <p>Getter for marginLeft.</p>
-   * @return Double
+   * @return double
    **/
-  public final Double getMarginLeft() {
+  public final double getMarginLeft() {
     return this.marginLeft;
   }
 
@@ -128,15 +128,15 @@ public class DocPage<WI> {
    * <p>Setter for marginLeft.</p>
    * @param pMarginLeft reference
    **/
-  public final void setMarginLeft(final Double pMarginLeft) {
+  public final void setMarginLeft(final double pMarginLeft) {
     this.marginLeft = pMarginLeft;
   }
 
   /**
    * <p>Getter for marginRight.</p>
-   * @return Double
+   * @return double
    **/
-  public final Double getMarginRight() {
+  public final double getMarginRight() {
     return this.marginRight;
   }
 
@@ -144,15 +144,15 @@ public class DocPage<WI> {
    * <p>Setter for marginRight.</p>
    * @param pMarginRight reference
    **/
-  public final void setMarginRight(final Double pMarginRight) {
+  public final void setMarginRight(final double pMarginRight) {
     this.marginRight = pMarginRight;
   }
 
   /**
    * <p>Getter for marginTop.</p>
-   * @return Double
+   * @return double
    **/
-  public final Double getMarginTop() {
+  public final double getMarginTop() {
     return this.marginTop;
   }
 
@@ -160,15 +160,15 @@ public class DocPage<WI> {
    * <p>Setter for marginTop.</p>
    * @param pMarginTop reference
    **/
-  public final void setMarginTop(final Double pMarginTop) {
+  public final void setMarginTop(final double pMarginTop) {
     this.marginTop = pMarginTop;
   }
 
   /**
    * <p>Getter for marginBottom.</p>
-   * @return Double
+   * @return double
    **/
-  public final Double getMarginBottom() {
+  public final double getMarginBottom() {
     return this.marginBottom;
   }
 
@@ -176,7 +176,7 @@ public class DocPage<WI> {
    * <p>Setter for marginBottom.</p>
    * @param pMarginBottom reference
    **/
-  public final void setMarginBottom(final Double pMarginBottom) {
+  public final void setMarginBottom(final double pMarginBottom) {
     this.marginBottom = pMarginBottom;
   }
 

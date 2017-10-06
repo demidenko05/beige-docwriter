@@ -23,16 +23,6 @@ import java.util.List;
 public class DocTable<WI> extends ADerivingElements<WI, DocTable<WI>> {
 
   /**
-   * <p>Font number base (from #1).</p>
-   **/
-  private int fontNumber;
-
-  /**
-   * <p>Font size base.</p>
-   **/
-  private double fontSize;
-
-  /**
    * <p>Cells.</p>
    **/
   private List<TableCell> itsCells;
@@ -48,16 +38,6 @@ public class DocTable<WI> extends ADerivingElements<WI, DocTable<WI>> {
   private List<TableColumn> itsColumns;
 
   /**
-   * <p>Align Horizontal content base.</p>
-   **/
-  private EAlignHorizontal alignHoriCont = EAlignHorizontal.LEFT;
-
-  /**
-   * <p>Align Vertical content base.</p>
-   **/
-  private EAlignVertical alignVertCont = EAlignVertical.TOP;
-
-  /**
    * <p>If repeat table head on every page.</p>
    **/
   private boolean isRepeatHead;
@@ -69,38 +49,6 @@ public class DocTable<WI> extends ADerivingElements<WI, DocTable<WI>> {
   private boolean isThereCellWithCustomBorder;
 
   //Simple getters and setters:
-  /**
-   * <p>Getter for fontNumber.</p>
-   * @return int
-   **/
-  public final int getFontNumber() {
-    return this.fontNumber;
-  }
-
-  /**
-   * <p>Setter for fontNumber.</p>
-   * @param pFontNumber reference
-   **/
-  public final void setFontNumber(final int pFontNumber) {
-    this.fontNumber = pFontNumber;
-  }
-
-  /**
-   * <p>Getter for fontSize.</p>
-   * @return double
-   **/
-  public final double getFontSize() {
-    return this.fontSize;
-  }
-
-  /**
-   * <p>Setter for fontSize.</p>
-   * @param pFontSize reference
-   **/
-  public final void setFontSize(final double pFontSize) {
-    this.fontSize = pFontSize;
-  }
-
   /**
    * <p>Getter for itsCells.</p>
    * @return List<TableCell>
@@ -147,38 +95,6 @@ public class DocTable<WI> extends ADerivingElements<WI, DocTable<WI>> {
    **/
   public final void setItsColumns(final List<TableColumn> pItsColumns) {
     this.itsColumns = pItsColumns;
-  }
-
-  /**
-   * <p>Getter for alignHoriCont.</p>
-   * @return EAlignHorizontal
-   **/
-  public final EAlignHorizontal getAlignHoriCont() {
-    return this.alignHoriCont;
-  }
-
-  /**
-   * <p>Setter for alignHoriCont.</p>
-   * @param pAlignHoriCont reference
-   **/
-  public final void setAlignHoriCont(final EAlignHorizontal pAlignHoriCont) {
-    this.alignHoriCont = pAlignHoriCont;
-  }
-
-  /**
-   * <p>Getter for alignVertCont.</p>
-   * @return EAlignVertical
-   **/
-  public final EAlignVertical getAlignVertCont() {
-    return this.alignVertCont;
-  }
-
-  /**
-   * <p>Setter for alignVertCont.</p>
-   * @param pAlignVertCont reference
-   **/
-  public final void setAlignVertCont(final EAlignVertical pAlignVertCont) {
-    this.alignVertCont = pAlignVertCont;
   }
 
   /**

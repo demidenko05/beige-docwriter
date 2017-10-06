@@ -20,6 +20,11 @@ package org.beigesoft.doc.model;
 public class TableRow extends ADocContainer {
 
   /**
+   * <p>Page number.</p>
+   **/
+  private Integer pageNumber;
+
+  /**
    * <p>If head row.</p>
    **/
   private boolean isHead;
@@ -35,6 +40,22 @@ public class TableRow extends ADocContainer {
   private boolean isHeightFixed;
 
   //Simple getters and setters:
+  /**
+   * <p>Getter for pageNumber.</p>
+   * @return Integer
+   **/
+  public final Integer getPageNumber() {
+    return this.pageNumber;
+  }
+
+  /**
+   * <p>Setter for pageNumber.</p>
+   * @param pPageNumber reference
+   **/
+  public final void setPageNumber(final Integer pPageNumber) {
+    this.pageNumber = pPageNumber;
+  }
+
   /**
    * <p>Getter for isHead.</p>
    * @return boolean

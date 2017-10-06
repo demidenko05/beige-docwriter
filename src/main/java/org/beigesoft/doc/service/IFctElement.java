@@ -15,6 +15,7 @@ package org.beigesoft.doc.service;
 import org.beigesoft.doc.model.DocString;
 import org.beigesoft.doc.model.DocLine;
 import org.beigesoft.doc.model.DocRectangle;
+import org.beigesoft.doc.model.IDerivingElements;
 
 /**
  * <p>Abstraction of service that creates document's element.</p>
@@ -26,22 +27,26 @@ public interface IFctElement<WI> {
 
   /**
    * <p>Create document string.</p>
+   * @param pParent parent
    * @return DocString
    * @throws Exception an Exception
    **/
-  DocString<WI> createDocString() throws Exception;
+  DocString<WI> createDocString(IDerivingElements pParent) throws Exception;
 
   /**
    * <p>Create document line.</p>
+   * @param pParent parent
    * @return DocLine
    * @throws Exception an Exception
    **/
-  DocLine<WI> createDocLine() throws Exception;
+  DocLine<WI> createDocLine(IDerivingElements pParent) throws Exception;
 
   /**
    * <p>Create document rectangle.</p>
+   * @param pParent parent
    * @return DocRectangle
    * @throws Exception an Exception
    **/
-  DocRectangle<WI> createDocRectangle() throws Exception;
+  DocRectangle<WI> createDocRectangle(
+    IDerivingElements pParent) throws Exception;
 }

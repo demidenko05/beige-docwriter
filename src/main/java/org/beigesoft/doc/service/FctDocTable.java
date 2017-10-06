@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 import org.beigesoft.doc.model.DocTable;
 import org.beigesoft.doc.model.Document;
-import org.beigesoft.doc.model.DocPage;
 import org.beigesoft.doc.model.TableRow;
 import org.beigesoft.doc.model.TableColumn;
 import org.beigesoft.doc.model.TableCell;
@@ -37,57 +36,54 @@ public class FctDocTable<WI> implements IFctDocTable<WI> {
   /**
    * <p>Create simple document table.</p>
    * @param pDoc document
-   * @param pStartPg page
-   * @param pRows total
    * @param pColumns total
-   * @param pBorder Border, 0 means NO
-   * @param pPadding padding
+   * @param pRows total
    * @return DocTable
    * @throws Exception an Exception
    **/
   @Override
   public final DocTable<WI> createDocTable(final Document<WI> pDoc,
-    final DocPage<WI> pStartPg, final int pRows,
-      final int pColumns, final double pBorder,
-        final double pPadding) throws Exception {
+    final int pColumns, final int pRows) throws Exception {
     DocTable<WI> res = new DocTable<WI>();
-    res.setFontNumber(pDoc.getFontNumber());
-    res.setFontSize(pDoc.getFontSize());
     res.setDocument(pDoc);
-    res.setStartPage(pStartPg);
+    res.setStartPage(pDoc.getPages().get(pDoc.getPageNumber() - 1));
     res.setDeriverElements(this.deriverElements);
     res.setItsRows(new ArrayList<TableRow>());
-    res.setBorder(pBorder);
-    res.setPaddingTop(pPadding);
-    res.setPaddingBottom(pPadding);
-    res.setPaddingLeft(pPadding);
-    res.setPaddingRight(pPadding);
+    res.setBorder(pDoc.getBorder());
+    res.setPaddingTop(pDoc.getContentPaddingTop());
+    res.setPaddingBottom(pDoc.getContentPaddingBottom());
+    res.setPaddingLeft(pDoc.getContentPaddingLeft());
+    res.setPaddingRight(pDoc.getContentPaddingRight());
+    res.setMarginTop(pDoc.getContainerMarginTop());
+    res.setMarginBottom(pDoc.getContainerMarginBottom());
+    res.setMarginLeft(pDoc.getContainerMarginLeft());
+    res.setMarginRight(pDoc.getContainerMarginRight());
     for (int i = 0; i < pRows; i++) {
       TableRow trow = new TableRow();
-      trow.setBorder(pBorder);
-      trow.setPaddingTop(pPadding);
-      trow.setPaddingBottom(pPadding);
-      trow.setPaddingLeft(pPadding);
-      trow.setPaddingRight(pPadding);
+      trow.setBorder(pDoc.getBorder());
+      trow.setPaddingTop(pDoc.getContentPaddingTop());
+      trow.setPaddingBottom(pDoc.getContentPaddingBottom());
+      trow.setPaddingLeft(pDoc.getContentPaddingLeft());
+      trow.setPaddingRight(pDoc.getContentPaddingRight());
       res.getItsRows().add(trow);
     }
     res.setItsColumns(new ArrayList<TableColumn>());
     for (int i = 0; i < pColumns; i++) {
       TableColumn tcol = new TableColumn();
-      tcol.setBorder(pBorder);
-      tcol.setPaddingTop(pPadding);
-      tcol.setPaddingBottom(pPadding);
-      tcol.setPaddingLeft(pPadding);
-      tcol.setPaddingRight(pPadding);
+      tcol.setBorder(pDoc.getBorder());
+      tcol.setPaddingTop(pDoc.getContentPaddingTop());
+      tcol.setPaddingBottom(pDoc.getContentPaddingBottom());
+      tcol.setPaddingLeft(pDoc.getContentPaddingLeft());
+      tcol.setPaddingRight(pDoc.getContentPaddingRight());
       res.getItsColumns().add(tcol);
     }
     res.setItsCells(new ArrayList<TableCell>());
     for (int i = 0; i < pRows * pColumns; i++) {
       TableCell tcel = new TableCell();
-      tcel.setFontNumber(res.getFontNumber());
-      tcel.setFontSize(res.getFontSize());
-      tcel.setAlignHorizontal(res.getAlignHoriCont());
-      tcel.setAlignVertical(res.getAlignVertCont());
+      tcel.setFontNumber(pDoc.getFontNumber());
+      tcel.setFontSize(pDoc.getFontSize());
+      tcel.setAlignHorizontal(pDoc.getAlignHoriCont());
+      tcel.setAlignVertical(pDoc.getAlignVertCont());
       res.getItsCells().add(tcel);
     }
     pDoc.getDerivingElementsList().add(res);

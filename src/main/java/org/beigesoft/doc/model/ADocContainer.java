@@ -117,9 +117,9 @@ public abstract class ADocContainer extends ADocElement
    **/
   private double marginBottom;
 
-  // intermediate or desired width:
+  // calculated or desired width:
   /**
-   * <p>Width.</p>
+   * <p>Width in UOM.</p>
    **/
   private double width;
 
@@ -129,9 +129,9 @@ public abstract class ADocContainer extends ADocElement
   private boolean isWidthFixed;
 
   /**
-   * <p>If width in percentage of rest.</p>
+   * <p>Width in percentage of FILLED parent.</p>
    **/
-  private boolean isWidthInPercentage;
+  private double widthInPercentage;
 
   /**
    * <p>Getter for width.</p>
@@ -144,7 +144,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for width.</p>
-   * @param pWidth reference
+   * @param pWidth value
    **/
   @Override
   public final void setWidth(final double pWidth) {
@@ -162,7 +162,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for isWidthFixed.</p>
-   * @param pIsWidthFixed reference
+   * @param pIsWidthFixed value
    **/
   @Override
   public final void setIsWidthFixed(final boolean pIsWidthFixed) {
@@ -170,21 +170,21 @@ public abstract class ADocContainer extends ADocElement
   }
 
   /**
-   * <p>Getter for isWidthInPercentage.</p>
+   * <p>Getter for widthInPercentage.</p>
    * @return boolean
    **/
   @Override
-  public final boolean getIsWidthInPercentage() {
-    return this.isWidthInPercentage;
+  public final double getWidthInPercentage() {
+    return this.widthInPercentage;
   }
 
   /**
-   * <p>Setter for isWidthInPercentage.</p>
-   * @param pIsWidthInPercentage reference
+   * <p>Setter for widthInPercentage.</p>
+   * @param pWidthInPercentage value
    **/
   @Override
-  public final void setIsWidthInPercentage(final boolean pIsWidthInPercentage) {
-    this.isWidthInPercentage = pIsWidthInPercentage;
+  public final void setWidthInPercentage(final double pWidthInPercentage) {
+    this.widthInPercentage = pWidthInPercentage;
   }
 
   /**
@@ -198,7 +198,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for parent.</p>
-   * @param pParent reference
+   * @param pParent value
    **/
   @Override
   public final void setParent(final IDocContainer pParent) {
@@ -216,7 +216,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for wraping.</p>
-   * @param pWraping reference
+   * @param pWraping value
    **/
   @Override
   public final void setWraping(
@@ -236,7 +236,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for x1 Upper left.</p>
-   * @param pX1 reference
+   * @param pX1 value
    **/
   @Override
   public final void setX1(final double pX1) {
@@ -254,7 +254,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for y1 Upper left.</p>
-   * @param pY1 reference
+   * @param pY1 value
    **/
   @Override
   public final void setY1(final double pY1) {
@@ -272,7 +272,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for x2 Lower right.</p>
-   * @param pX2 reference
+   * @param pX2 value
    **/
   @Override
   public final void setX2(final double pX2) {
@@ -290,7 +290,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for y2 Lower right.</p>
-   * @param pY2 reference
+   * @param pY2 value
    **/
   @Override
   public final void setY2(final double pY2) {
@@ -308,7 +308,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for isX1Fixed.</p>
-   * @param pIsX1Fixed reference
+   * @param pIsX1Fixed value
    **/
   @Override
   public final void setIsX1Fixed(final boolean pIsX1Fixed) {
@@ -326,7 +326,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for isX2Fixed.</p>
-   * @param pIsX2Fixed reference
+   * @param pIsX2Fixed value
    **/
   @Override
   public final void setIsX2Fixed(final boolean pIsX2Fixed) {
@@ -344,7 +344,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for isY1Fixed.</p>
-   * @param pIsY1Fixed reference
+   * @param pIsY1Fixed value
    **/
   @Override
   public final void setIsY1Fixed(final boolean pIsY1Fixed) {
@@ -362,7 +362,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for isY2Fixed.</p>
-   * @param pIsY2Fixed reference
+   * @param pIsY2Fixed value
    **/
   @Override
   public final void setIsY2Fixed(final boolean pIsY2Fixed) {
@@ -380,7 +380,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for border.</p>
-   * @param pBorder reference
+   * @param pBorder value
    **/
   @Override
   public final void setBorder(final double pBorder) {
@@ -398,7 +398,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for paddingLeft.</p>
-   * @param pPaddingLeft reference
+   * @param pPaddingLeft value
    **/
   @Override
   public final void setPaddingLeft(final double pPaddingLeft) {
@@ -416,7 +416,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for paddingRight.</p>
-   * @param pPaddingRight reference
+   * @param pPaddingRight value
    **/
   @Override
   public final void setPaddingRight(final double pPaddingRight) {
@@ -434,7 +434,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for paddingTop.</p>
-   * @param pPaddingTop reference
+   * @param pPaddingTop value
    **/
   @Override
   public final void setPaddingTop(final double pPaddingTop) {
@@ -452,7 +452,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for paddingBottom.</p>
-   * @param pPaddingBottom reference
+   * @param pPaddingBottom value
    **/
   @Override
   public final void setPaddingBottom(final double pPaddingBottom) {
@@ -470,7 +470,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for marginLeft.</p>
-   * @param pMarginLeft reference
+   * @param pMarginLeft value
    **/
   @Override
   public final void setMarginLeft(final double pMarginLeft) {
@@ -488,7 +488,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for marginRight.</p>
-   * @param pMarginRight reference
+   * @param pMarginRight value
    **/
   @Override
   public final void setMarginRight(final double pMarginRight) {
@@ -506,7 +506,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for marginTop.</p>
-   * @param pMarginTop reference
+   * @param pMarginTop value
    **/
   @Override
   public final void setMarginTop(final double pMarginTop) {
@@ -524,7 +524,7 @@ public abstract class ADocContainer extends ADocElement
 
   /**
    * <p>Setter for marginBottom.</p>
-   * @param pMarginBottom reference
+   * @param pMarginBottom value
    **/
   @Override
   public final void setMarginBottom(final double pMarginBottom) {

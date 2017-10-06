@@ -42,63 +42,83 @@ public class EvalMetricsString implements IEvalMetricsString {
     final String pFntNm, final double pFntSize,
       final double pWidth, final double pLineSpace) throws Exception {
     MetricsString result = new MetricsString();
-    Integer lastWbIdx = null;
-    double lstStrLenBefWb = 0.0;
-    double currStrLen = 0.0;
-    double spaceWd = this.evalCharWidth.eval(' ', pFntNm, pFntSize);
-    StringBuffer sb = new StringBuffer();
-    int chInStrIdx = 0;
-    for (char ch : pSource.toCharArray()) {
-      if (ch == '\n') {
-        result.getStrings().add(sb.toString());
-        sb = sb.delete(0, sb.length());
-        if (result.getWidth() < currStrLen) {
-          result.setWidth(currStrLen);
-        }
-        chInStrIdx = 0;
-        currStrLen = 0.0;
-      } else {
-        if (ch == ' ' || ch == '-') {
-          lastWbIdx = chInStrIdx;
-          lstStrLenBefWb = currStrLen;
-        }
-        double chWd = this.evalCharWidth.eval(ch, pFntNm, pFntSize);
-        if (currStrLen + chWd <= pWidth) {
-          currStrLen += chWd;
-          sb.append(ch);
-          chInStrIdx++;
+    if (pSource == null || pSource.trim().equals("")) {
+      result.getStrings().add(" ");
+      result.getWidths().add(this.evalCharWidth.eval(' ', pFntNm, pFntSize));
+    } else {
+      Integer lastWbIdx = null;
+      double lstStrLenBefWb = 0.0;
+      double lstWbWidth = 0.0;
+      double currStrLen = 0.0;
+      StringBuffer sb = new StringBuffer();
+      int chInStrIdx = 0;
+      for (char ch : pSource.toCharArray()) {
+        if (ch == '\n') {
+          result.getStrings().add(sb.toString());
+          result.getWidths().add(currStrLen);
+          if (result.getWidth() < currStrLen) {
+            result.setWidth(currStrLen);
+          }
+          sb = sb.delete(0, sb.length());
+          chInStrIdx = 0;
+          currStrLen = 0.0;
         } else {
-          if (lastWbIdx == null) {
-            result.getStrings().add(sb.toString());
-            sb = sb.delete(0, sb.length());
-            if (result.getWidth() < currStrLen) {
-              result.setWidth(currStrLen);
-            }
-            sb.append(ch);
-            chInStrIdx = 1;
-            currStrLen = chWd;
-          } else {
+          double chWd = this.evalCharWidth.eval(ch, pFntNm, pFntSize);
+          if (ch == ' ' || ch == '-') {
+            lastWbIdx = chInStrIdx;
+            lstStrLenBefWb = currStrLen;
+            lstWbWidth = chWd;
+          }
+          if (currStrLen + chWd <= pWidth) {
             currStrLen += chWd;
             sb.append(ch);
-            String str = sb.toString();
-            result.getStrings().add(str.substring(0, lastWbIdx));
-            sb = sb.delete(0, sb.length());
-            if (result.getWidth() < currStrLen) {
-              result.setWidth(currStrLen);
+            chInStrIdx++;
+          } else {
+            if (lastWbIdx == null) {
+              result.getStrings().add(sb.toString());
+              result.getWidths().add(currStrLen);
+              if (result.getWidth() < currStrLen) {
+                result.setWidth(currStrLen);
+              }
+              sb = sb.delete(0, sb.length());
+              sb.append(ch);
+              chInStrIdx = 1;
+              currStrLen = chWd;
+            } else if (ch == ' ' || ch == '-') {
+              String str = sb.toString();
+              result.getStrings().add(str.substring(0, lastWbIdx));
+              result.getWidths().add(lstStrLenBefWb);
+              if (result.getWidth() < lstStrLenBefWb) {
+                result.setWidth(lstStrLenBefWb);
+              }
+              sb = sb.delete(0, sb.length());
+              lastWbIdx = null;
+              chInStrIdx = 0;
+              currStrLen = 0.0;
+            } else {
+              sb.append(ch);
+              String str = sb.toString();
+              result.getStrings().add(str.substring(0, lastWbIdx));
+              result.getWidths().add(lstStrLenBefWb);
+              if (result.getWidth() < lstStrLenBefWb) {
+                result.setWidth(lstStrLenBefWb);
+              }
+              sb = sb.delete(0, sb.length());
+              sb.append(str.substring(lastWbIdx + 1));
+              lastWbIdx = null;
+              currStrLen = currStrLen - lstStrLenBefWb - lstWbWidth + chWd;
+              chInStrIdx = sb.length();
             }
-            currStrLen -= lstStrLenBefWb + spaceWd;
-            sb.append(str.substring(lastWbIdx + 1));
-            lastWbIdx = null;
-            chInStrIdx = sb.length() - 1;
           }
         }
       }
-    }
-    String str = sb.toString();
-    if (str.length() > 0) {
-      result.getStrings().add(str);
-      if (result.getWidth() < currStrLen) {
-        result.setWidth(currStrLen);
+      String str = sb.toString();
+      if (str.length() > 0) {
+        result.getStrings().add(str);
+        result.getWidths().add(currStrLen);
+        if (result.getWidth() < currStrLen) {
+          result.setWidth(currStrLen);
+        }
       }
     }
     result.setHeight(result.getStrings().size() * pFntSize);
