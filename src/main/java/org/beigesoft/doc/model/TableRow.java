@@ -39,6 +39,25 @@ public class TableRow extends ADocContainer {
    **/
   private boolean isHeightFixed;
 
+  /**
+   * <p>Constructor default.</p>
+   **/
+  public TableRow() {
+  }
+
+  /**
+   * <p>Constructor for header row.</p>
+   * @param pRow reference
+   **/
+  public TableRow(final TableRow pRow) {
+    this.height = pRow.getHeight();
+    this.setWidth(pRow.getWidth());
+    this.setX1(pRow.getX1());
+    this.setX2(pRow.getX2());
+    this.setY1(pRow.getY1());
+    this.setY2(pRow.getY2());
+  }
+
   //Simple getters and setters:
   /**
    * <p>Getter for pageNumber.</p>

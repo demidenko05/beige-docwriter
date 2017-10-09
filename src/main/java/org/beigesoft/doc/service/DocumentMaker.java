@@ -21,6 +21,7 @@ import java.nio.charset.CharsetEncoder;
 import org.beigesoft.doc.exception.ExceptionBdw;
 import org.beigesoft.doc.model.EPageSize;
 import org.beigesoft.doc.model.EPageOrientation;
+import org.beigesoft.doc.model.EAlignHorizontal;
 import org.beigesoft.doc.model.EWraping;
 import org.beigesoft.doc.model.Document;
 import org.beigesoft.doc.model.DocTable;
@@ -29,10 +30,11 @@ import org.beigesoft.doc.model.TableColumn;
 import org.beigesoft.doc.model.IElement;
 import org.beigesoft.doc.model.DocPage;
 import org.beigesoft.doc.model.DocString;
+import org.beigesoft.doc.model.Pagination;
 import org.beigesoft.doc.model.IDerivingElements;
 
 /**
- * <p>Utility that invoke deriving elements for document.</p>
+ * <p>Service that makes document.</p>
  *
  * @param <WI> writing instrument type
  * @author Yury Demidenko
@@ -54,6 +56,11 @@ public class DocumentMaker<WI> implements IDocumentMaker<WI> {
    **/
   private final CharsetEncoder charsetEncoder =
     Charset.forName("ISO-8859-1").newEncoder();
+
+  /**
+   * <p>Deriver pagination elements.</p>
+   **/
+  private IDeriverElements<WI, Pagination<WI>> deriverElPagination;
 
   /**
    * <p>Add a page into document like the last page
@@ -262,6 +269,26 @@ public class DocumentMaker<WI> implements IDocumentMaker<WI> {
   }
 
   /**
+   * <p>Add pagination from current page.</p>
+   * @param pDoc Document
+   * @return Pagination Pagination
+   * @throws Exception an Exception
+   **/
+  @Override
+  public final Pagination<WI> addPagination(
+    final Document<WI> pDoc) throws Exception {
+    Pagination<WI> paging = new Pagination<WI>();
+    paging.setDocument(pDoc);
+    paging.setStartPage(pDoc.getPages().get(pDoc.getPageNumber() - 1));
+    paging.setDeriverElements(this.deriverElPagination);
+    paging.setAlignHorizontal(EAlignHorizontal.RIGHT);
+    paging.setFontNumber(pDoc.getFontNumber());
+    paging.setFontSize(pDoc.getFontSize());
+    pDoc.getDerivingElementsList().add(paging);
+    return paging;
+  }
+
+  /**
    * <p>Add simple document table with preferred padding and no border
    * to current page.</p>
    * @param pDoc document
@@ -363,5 +390,22 @@ public class DocumentMaker<WI> implements IDocumentMaker<WI> {
    **/
   public final CharsetEncoder getCharsetEncoder() {
     return this.charsetEncoder;
+  }
+
+  /**
+   * <p>Getter for deriverElPagination.</p>
+   * @return IDeriverElements<WI, Pagination<WI>>
+   **/
+  public final IDeriverElements<WI, Pagination<WI>> getDeriverElPagination() {
+    return this.deriverElPagination;
+  }
+
+  /**
+   * <p>Setter for deriverElPagination.</p>
+   * @param pDeriverElPagination reference
+   **/
+  public final void setDeriverElPagination(
+    final IDeriverElements<WI, Pagination<WI>> pDeriverElPagination) {
+    this.deriverElPagination = pDeriverElPagination;
   }
 }

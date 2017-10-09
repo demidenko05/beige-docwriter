@@ -16,6 +16,7 @@ import org.beigesoft.doc.model.Document;
 import org.beigesoft.doc.model.DocTable;
 import org.beigesoft.doc.model.EPageSize;
 import org.beigesoft.doc.model.EPageOrientation;
+import org.beigesoft.doc.model.Pagination;
 
 /**
  * <p>Abstraction of service that makes document.</p>
@@ -93,6 +94,14 @@ public interface IDocumentMaker<WI> {
    **/
   void addString(Document<WI> pDoc, String pString,
     double pX, double pY) throws Exception;
+
+  /**
+   * <p>Add pagination from current page.</p>
+   * @param pDoc Document
+   * @return Pagination Pagination
+   * @throws Exception an Exception
+   **/
+  Pagination<WI> addPagination(Document<WI> pDoc) throws Exception;
 
   /**
    * <p>Add simple document table with preferred padding/border

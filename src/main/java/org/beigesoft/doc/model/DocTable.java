@@ -48,6 +48,27 @@ public class DocTable<WI> extends ADerivingElements<WI, DocTable<WI>> {
    **/
   private boolean isThereCellWithCustomBorder;
 
+  // automatically evaluated:
+  /**
+   * <p>Header rows that's repeated on every new page.</p>
+   **/
+  private List<TableRow> repHeadRows;
+
+  /**
+   * <p>Header cells that's repeated on every new page.</p>
+   **/
+  private List<TableCell> repHeadCells;
+
+  /**
+   * <p>If affected on other's positions, e.g. pagination, background isn't.</p>
+   * @return is affected on other's positions
+   * @throws Exception an Exception
+   **/
+  @Override
+  public final boolean getIsAffectedOnOtherPositions() throws Exception {
+    return true;
+  }
+
   //Simple getters and setters:
   /**
    * <p>Getter for itsCells.</p>
@@ -128,5 +149,37 @@ public class DocTable<WI> extends ADerivingElements<WI, DocTable<WI>> {
   public final void setIsThereCellWithCustomBorder(
     final boolean pIsThereCellWithCustomBorder) {
     this.isThereCellWithCustomBorder = pIsThereCellWithCustomBorder;
+  }
+
+  /**
+   * <p>Getter for repHeadCells.</p>
+   * @return List<TableCell>
+   **/
+  public final List<TableCell> getRepHeadCells() {
+    return this.repHeadCells;
+  }
+
+  /**
+   * <p>Setter for repHeadCells.</p>
+   * @param pRepHeadCells reference
+   **/
+  public final void setRepHeadCells(final List<TableCell> pRepHeadCells) {
+    this.repHeadCells = pRepHeadCells;
+  }
+
+  /**
+   * <p>Getter for repHeadRows.</p>
+   * @return List<TableRow>
+   **/
+  public final List<TableRow> getRepHeadRows() {
+    return this.repHeadRows;
+  }
+
+  /**
+   * <p>Setter for repHeadRows.</p>
+   * @param pRepHeadRows reference
+   **/
+  public final void setRepHeadRows(final List<TableRow> pRepHeadRows) {
+    this.repHeadRows = pRepHeadRows;
   }
 }

@@ -22,6 +22,13 @@ package org.beigesoft.doc.model;
 public interface IDerivingElements<WI> extends IDocContainer {
 
   /**
+   * <p>If affected on other's positions, e.g. pagination, background isn't.</p>
+   * @return is affected on other's positions
+   * @throws Exception an Exception
+   **/
+  boolean getIsAffectedOnOtherPositions() throws Exception;
+
+  /**
    * <p>Derives (generates) document atomic elements.</p>
    * @throws Exception an Exception
    **/

@@ -154,90 +154,108 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
   }
 
   /**
-   * <p>Generate atomic elements.</p>
+   * <p>Add top row line.</p>
    * @param pTbl table
+   * @param pRow Row
+   * @param pPgNum Page Number
    * @throws Exception an Exception
    **/
-  public final void generateAtomics(final DocTable<WI> pTbl) throws Exception {
-    int colCnt = pTbl.getItsColumns().size();
-    if (pTbl.getBorder() > 0.0000001
-      && !pTbl.getIsThereCellWithCustomBorder()) {
-      boolean isFirst = true;
-      Integer curPgNum = pTbl.getItsRows().get(0).getPageNumber();
-      for (TableRow row : pTbl.getItsRows()) {
-        if (isFirst || !curPgNum.equals(row.getPageNumber())) {
-          // top row line
-          isFirst = false;
-          curPgNum = row.getPageNumber();
-          DocLine<WI> dlnt = this.elementFactory.createDocLine(pTbl);
-          dlnt.setWidth(pTbl.getBorder());
-          dlnt.setX1(row.getX1());
-          dlnt.setY1(row.getY1());
-          dlnt.setX2(row.getX2());
-          dlnt.setY2(row.getY1());
-          pTbl.getDocument().getPages().get(row.getPageNumber() - 1)
-            .getElements().add(dlnt);
-        }
-        // bottom row line
-        DocLine<WI> dlnb = this.elementFactory.createDocLine(pTbl);
-        dlnb.setWidth(pTbl.getBorder());
-        dlnb.setX1(row.getX1());
-        dlnb.setY1(row.getY2());
-        dlnb.setX2(row.getX2());
-        dlnb.setY2(row.getY2());
-        pTbl.getDocument().getPages().get(row.getPageNumber() - 1)
-          .getElements().add(dlnb);
-        // left row line
-        DocLine<WI> dlnl = this.elementFactory.createDocLine(pTbl);
-        dlnl.setWidth(pTbl.getBorder());
-        dlnl.setX1(row.getX1());
-        dlnl.setY1(row.getY1());
-        dlnl.setX2(row.getX1());
-        dlnl.setY2(row.getY2());
-        pTbl.getDocument().getPages().get(row.getPageNumber() - 1)
-          .getElements().add(dlnl);
-        // right row line
-        DocLine<WI> dlnr = this.elementFactory.createDocLine(pTbl);
-        dlnr.setWidth(pTbl.getBorder());
-        dlnr.setX1(row.getX2());
-        dlnr.setY1(row.getY1());
-        dlnr.setX2(row.getX2());
-        dlnr.setY2(row.getY2());
-        pTbl.getDocument().getPages().get(row.getPageNumber() - 1)
-          .getElements().add(dlnr);
+  public final void addTopRowLine(final DocTable<WI> pTbl,
+    final TableRow pRow, final Integer pPgNum) throws Exception {
+    DocLine<WI> dln = this.elementFactory.createDocLine(pTbl);
+    dln.setWidth(pTbl.getBorder());
+    dln.setX1(pRow.getX1());
+    dln.setY1(pRow.getY1());
+    dln.setX2(pRow.getX2());
+    dln.setY2(pRow.getY1());
+    pTbl.getDocument().getPages().get(pPgNum - 1).getElements().add(dln);
+  }
+
+  /**
+   * <p>Add bottom, left, right row lines.</p>
+   * @param pTbl table
+   * @param pRow Row
+   * @param pPgNum Page Number
+   * @throws Exception an Exception
+   **/
+  public final void addBlrRowLines(final DocTable<WI> pTbl,
+    final TableRow pRow, final Integer pPgNum) throws Exception {
+    // bottom pRow line
+    DocLine<WI> dlnb = this.elementFactory.createDocLine(pTbl);
+    dlnb.setWidth(pTbl.getBorder());
+    dlnb.setX1(pRow.getX1());
+    dlnb.setY1(pRow.getY2());
+    dlnb.setX2(pRow.getX2());
+    dlnb.setY2(pRow.getY2());
+    pTbl.getDocument().getPages().get(pPgNum - 1)
+      .getElements().add(dlnb);
+    // left pRow line
+    DocLine<WI> dlnl = this.elementFactory.createDocLine(pTbl);
+    dlnl.setWidth(pTbl.getBorder());
+    dlnl.setX1(pRow.getX1());
+    dlnl.setY1(pRow.getY1());
+    dlnl.setX2(pRow.getX1());
+    dlnl.setY2(pRow.getY2());
+    pTbl.getDocument().getPages().get(pPgNum - 1)
+      .getElements().add(dlnl);
+    // right pRow line
+    DocLine<WI> dlnr = this.elementFactory.createDocLine(pTbl);
+    dlnr.setWidth(pTbl.getBorder());
+    dlnr.setX1(pRow.getX2());
+    dlnr.setY1(pRow.getY1());
+    dlnr.setX2(pRow.getX2());
+    dlnr.setY2(pRow.getY2());
+    pTbl.getDocument().getPages().get(pPgNum - 1)
+      .getElements().add(dlnr);
+  }
+
+  /**
+   * <p>Add right columns line for rows.</p>
+   * @param pTbl table
+   * @param pCol cloumn
+   * @param pRows Rows
+   * @param pPgNum Page Number for all rows if apply
+   * @throws Exception an Exception
+   **/
+  public final void addRightColumnLineForRows(final DocTable<WI> pTbl,
+    final TableColumn pCol, final List<TableRow> pRows,
+      final Integer pPgNum) throws Exception {
+    // right column line
+    for (TableRow row : pRows) {
+      DocLine<WI> dlnr = this.elementFactory.createDocLine(pTbl);
+      dlnr.setWidth(pTbl.getBorder());
+      dlnr.setX1(pCol.getX2());
+      dlnr.setY1(row.getY1());
+      dlnr.setX2(pCol.getX2());
+      dlnr.setY2(row.getY2());
+      Integer pgNum = pPgNum;
+      if (pgNum == null) {
+        pgNum = row.getPageNumber();
       }
-      int colIdx = 0;
-      for (TableColumn col : pTbl.getItsColumns()) {
-        if (colIdx + 1 < colCnt) {
-          // right column line
-          for (TableRow row : pTbl.getItsRows()) {
-            DocLine<WI> dlnr = this.elementFactory.createDocLine(pTbl);
-            dlnr.setWidth(pTbl.getBorder());
-            dlnr.setX1(col.getX2());
-            dlnr.setY1(row.getY1());
-            dlnr.setX2(col.getX2());
-            dlnr.setY2(row.getY2());
-            pTbl.getDocument().getPages().get(row.getPageNumber() - 1)
-              .getElements().add(dlnr);
-          }
-        }
-        colIdx++;
-        if (colIdx == colCnt) {
-          colIdx = 0;
-        }
-      }
-    } else if (pTbl.getBorder() > 0.0000001
-      && pTbl.getIsThereCellWithCustomBorder()) {
-      throw new ExceptionBdw("Not yet implemented!");
+      pTbl.getDocument().getPages().get(pgNum - 1).getElements().add(dlnr);
     }
+  }
+
+  /**
+   * <p>Generate atomic strings for given cells/rows.</p>
+   * @param pTbl table
+   * @param pCells Cells
+   * @param pRows Rows
+   * @param pPgNum Page Number for all rows if apply
+   * @throws Exception an Exception
+   **/
+  public final void generateStrings(final DocTable<WI> pTbl,
+    final List<TableCell> pCells, final List<TableRow> pRows,
+      final Integer pPgNum) throws Exception {
+    int colCnt = pTbl.getItsColumns().size();
     int colIdx = 0;
     int rowIdx = 0;
     TableRow row = null;
-    for (TableCell cel : pTbl.getItsCells()) {
+    for (TableCell cel : pCells) {
       if (!cel.getIsMerged()) {
         TableColumn col = pTbl.getItsColumns().get(colIdx);
         if (row == null) {
-          row = pTbl.getItsRows().get(rowIdx);
+          row = pRows.get(rowIdx);
         }
         for (int i = 0; i < cel.getMetricsString().getStrings().size(); i++) {
           String str = cel.getMetricsString().getStrings().get(i);
@@ -278,8 +296,11 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
             dstr.setY1(row.getY1() + dh + (cel.getFontSize() * i));
           }
           dstr.setY2(dstr.getY1() + cel.getFontSize());
-          pTbl.getDocument().getPages().get(row.getPageNumber() - 1)
-            .getElements().add(dstr);
+          Integer pgNum = pPgNum;
+          if (pgNum == null) {
+            pgNum = row.getPageNumber();
+          }
+          pTbl.getDocument().getPages().get(pgNum - 1).getElements().add(dstr);
         }
       }
       colIdx++;
@@ -289,6 +310,69 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
         row = null;
       }
     }
+  }
+
+  /**
+   * <p>Generate atomic elements.</p>
+   * @param pTbl table
+   * @throws Exception an Exception
+   **/
+  public final void generateAtomics(final DocTable<WI> pTbl) throws Exception {
+    int colCnt = pTbl.getItsColumns().size();
+    if (pTbl.getBorder() > 0.0000001
+      && !pTbl.getIsThereCellWithCustomBorder()) {
+      // repeated head:
+      Integer pgFistRow = pTbl.getItsRows().get(0).getPageNumber();
+      Integer pgLastRow = pTbl.getItsRows()
+        .get(pTbl.getItsRows().size() - 1).getPageNumber();
+      boolean isFirst = true;
+      if (pTbl.getIsRepeatHead() && !pgFistRow.equals(pgLastRow)) {
+        for (Integer pgCurr = pgFistRow + 1; pgCurr <= pgLastRow; pgCurr++) {
+          isFirst = true;
+          for (TableRow row : pTbl.getRepHeadRows()) {
+            if (isFirst) {
+              // top row line
+              isFirst = false;
+              addTopRowLine(pTbl, row, pgCurr);
+            }
+            addBlrRowLines(pTbl, row, pgCurr);
+          }
+          int colIdx = 0;
+          for (TableColumn col : pTbl.getItsColumns()) {
+            if (colIdx + 1 < colCnt) {
+              addRightColumnLineForRows(pTbl, col, pTbl.getRepHeadRows(),
+                pgCurr);
+            }
+            colIdx++;
+          }
+          generateStrings(pTbl, pTbl.getRepHeadCells(),
+            pTbl.getRepHeadRows(), pgCurr);
+        }
+      }
+      isFirst = true;
+      Integer curPgNum = pTbl.getItsRows().get(0).getPageNumber();
+      for (TableRow row : pTbl.getItsRows()) {
+        if (isFirst || !curPgNum.equals(row.getPageNumber())
+          && !pTbl.getIsRepeatHead()) {
+          // top row line
+          isFirst = false;
+          curPgNum = row.getPageNumber();
+          addTopRowLine(pTbl, row, row.getPageNumber());
+        }
+        addBlrRowLines(pTbl, row, row.getPageNumber());
+      }
+      int colIdx = 0;
+      for (TableColumn col : pTbl.getItsColumns()) {
+        if (colIdx + 1 < colCnt) {
+          addRightColumnLineForRows(pTbl, col, pTbl.getItsRows(), null);
+        }
+        colIdx++;
+      }
+    } else if (pTbl.getBorder() > 0.0000001
+      && pTbl.getIsThereCellWithCustomBorder()) {
+      throw new ExceptionBdw("Not yet implemented!");
+    }
+    generateStrings(pTbl, pTbl.getItsCells(), pTbl.getItsRows(), null);
   }
 
   /**
@@ -380,29 +464,12 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
     int colCnt = pTbl.getItsColumns().size();
     int rowIdx = 0;
     int colIdx = 0;
-    List<TableRow> header = null;
-    TableRow row = pTbl.getItsRows().get(0);
-    if (pTbl.getIsRepeatHead()) {
-      header = new ArrayList<TableRow>();
-      if (row.getIsHead()) {
-        header.add(row);
-      } else {
-        throw new ExceptionBdw("Repeated header without itself!!!");
-      }
-    }
     // 1. eval content (rows) height:
+    TableRow row = pTbl.getItsRows().get(0);
     for (TableCell cel : pTbl.getItsCells()) {
       TableColumn col = pTbl.getItsColumns().get(colIdx);
       if (row == null) {
         row = pTbl.getItsRows().get(rowIdx);
-        if (header != null && row.getIsHead()) {
-          if (header.size() == rowIdx) {
-            header.add(row);
-          } else {
-            throw new ExceptionBdw("Row header after non-header!!! idx "
-              + rowIdx);
-          }
-        }
       }
       double borderWd;
       if (colIdx == 0) {
@@ -438,10 +505,58 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
         row = null;
       }
     }
-    // 2. final evaluate table position, add pages if need
+    // 2. evaluate header if exist
+    DocPage<WI> curPg = pTbl.getStartPage();
+    rowIdx = 0;
+    colIdx = 0;
+    row = pTbl.getItsRows().get(0);
+    double repHeaderHeight = 0.0;
+    if (pTbl.getIsRepeatHead()) {
+      pTbl.setRepHeadRows(new ArrayList<TableRow>());
+      TableRow hrow;
+      TableRow hrowPrev;
+      if (row.getIsHead()) {
+        hrow = new TableRow(row);
+        pTbl.getRepHeadRows().add(hrow);
+        repHeaderHeight += hrow.getHeight();
+        hrow.setY1(curPg.getMarginBottom() + pTbl.getMarginTop());
+        hrow.setY2(hrow.getY1() + hrow.getHeight());
+        hrowPrev = hrow;
+      } else {
+        throw new ExceptionBdw("Repeated header without itself!!!");
+      }
+      pTbl.setRepHeadCells(new ArrayList<TableCell>());
+      for (TableCell cel : pTbl.getItsCells()) {
+        if (row == null) {
+          row = pTbl.getItsRows().get(rowIdx);
+          if (row.getIsHead()) {
+            if (pTbl.getRepHeadRows().size() == rowIdx) {
+              hrow = new TableRow(row);
+              pTbl.getRepHeadRows().add(hrow);
+              repHeaderHeight += hrow.getHeight();
+              hrow.setY1(hrowPrev.getY2());
+              hrow.setY2(hrow.getY1() + hrow.getHeight());
+              hrowPrev = hrow;
+            } else {
+              throw new ExceptionBdw("Row header after non-header!!! idx "
+                + rowIdx);
+            }
+          }
+        }
+        if (row.getIsHead()) {
+          pTbl.getRepHeadCells().add(cel);
+        }
+        colIdx++;
+        if (colIdx == colCnt) {
+          colIdx = 0;
+          rowIdx++;
+          row = null;
+        }
+      }
+    }
+    // 3. final evaluate table position, add pages and table headers if need
       //the first row might exceed page, so table move at new/next page
     row = pTbl.getItsRows().get(0);
-    DocPage<WI> curPg = pTbl.getStartPage();
     if (pTbl.getY1() + row.getHeight() > curPg.getHeight()) {
       if (pTbl.getIsY1Fixed()) {
         throw new ExceptionBdw("Table Y1 fixed exceed page! Y1/row1 height: "
@@ -458,8 +573,8 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
       row = pTbl.getItsRows().get(i);
       if (rowPrev.getY2() + row.getHeight()
         > curPg.getHeight() - curPg.getMarginBottom()) {
-        curPg = evalNextOrNewPage(pTbl, pTbl.getStartPage());
-        row.setY1(curPg.getMarginBottom());
+        curPg = evalNextOrNewPage(pTbl, curPg);
+        row.setY1(curPg.getMarginBottom() + repHeaderHeight);
       } else {
         row.setY1(rowPrev.getY2());
       }
@@ -790,8 +905,13 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
     if (prnt == null) {
       int idxTbl = pTbl.getDocument().getDerivingElementsList().indexOf(pTbl);
       if (idxTbl > 0) { //previous:
-        prev = pTbl.getDocument().getDerivingElementsList()
-          .get(idxTbl - 1);
+        for (int i = idxTbl - 1; i >= 0; i--) {
+          if (pTbl.getDocument().getDerivingElementsList()
+            .get(i).getIsAffectedOnOtherPositions()) {
+            prev = pTbl.getDocument().getDerivingElementsList().get(i);
+            break;
+          }
+        }
       }
     }
     //Y1:
