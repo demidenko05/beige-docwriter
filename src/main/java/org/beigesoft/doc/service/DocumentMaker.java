@@ -26,6 +26,7 @@ import org.beigesoft.doc.model.EWraping;
 import org.beigesoft.doc.model.Document;
 import org.beigesoft.doc.model.DocTable;
 import org.beigesoft.doc.model.TableCell;
+import org.beigesoft.doc.model.TableRow;
 import org.beigesoft.doc.model.TableColumn;
 import org.beigesoft.doc.model.IElement;
 import org.beigesoft.doc.model.DocPage;
@@ -311,7 +312,6 @@ public class DocumentMaker<WI> implements IDocumentMaker<WI> {
     return rez;
   }
 
-
   /**
    * <p>Make DocTable wrapping content.</p>
    * @param pTbl document table
@@ -323,6 +323,26 @@ public class DocumentMaker<WI> implements IDocumentMaker<WI> {
     pTbl.setWraping(EWraping.WRAP_CONTENT);
     for (TableColumn col : pTbl.getItsColumns()) {
       col.setWraping(EWraping.WRAP_CONTENT);
+    }
+  }
+
+  /**
+   * <p>Add row to the end of DocTable.</p>
+   * @param pTbl document table
+   * @throws Exception an Exception
+   **/
+  @Override
+  public final void addRowToDocTable(
+    final DocTable<WI> pTbl) throws Exception {
+    TableRow rowEnd = pTbl.getItsRows().get(pTbl.getItsRows().size() - 1);
+    pTbl.getItsRows().add(new TableRow(rowEnd));
+    for (int i = 0; i < pTbl.getItsColumns().size(); i++) {
+      TableCell tcel = new TableCell();
+      tcel.setFontNumber(pTbl.getDocument().getFontNumber());
+      tcel.setFontSize(pTbl.getDocument().getFontSize());
+      tcel.setAlignHorizontal(pTbl.getDocument().getAlignHoriCont());
+      tcel.setAlignVertical(pTbl.getDocument().getAlignVertCont());
+      pTbl.getItsCells().add(tcel);
     }
   }
 

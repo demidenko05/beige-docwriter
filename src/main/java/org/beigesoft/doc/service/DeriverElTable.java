@@ -409,11 +409,11 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
     double tblWidth = pTbl.getX2() - pTbl.getX1();
     double wd100pr = tblWidth - fixedColWd;
     if (wd100pr < 0.0) {
-      throw new ExceptionBdw("Wrong fixed column widths: tbl/cols"
+      throw new ExceptionBdw("Wrong fixed column widths: tbl/cols "
         + tblWidth + "/" + fixedColWd);
     }
     if (wd100pr < 0.0001 && (fixedPrColWdPr > 2.0 || floatColCn > 0)) {
-      throw new ExceptionBdw("Wrong fixed column widths: tbl/cols"
+      throw new ExceptionBdw("Wrong fixed column widths: tbl/cols "
         + tblWidth + "/" + fixedColWd);
     }
     if (fixedPrColWdPr > 100.0) {
@@ -847,8 +847,12 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
           borderHt = col.getBorder();
         }
         if (cel.getMergedCell() != null) {
-          wasMergedWrapped = evalMergedCells(pTbl, cel, col,
-            celIdx, rowIdx, colIdx);
+          if (!wasMergedWrapped) {
+            wasMergedWrapped = evalMergedCells(pTbl, cel, col,
+              celIdx, rowIdx, colIdx);
+          } else {
+            evalMergedCells(pTbl, cel, col, celIdx, rowIdx, colIdx);
+          }
         } else {
           if (EWraping.WRAP_CONTENT.equals(pTbl.getWraping())
             && EWraping.FILL_PARENT.equals(col.getWraping())) {

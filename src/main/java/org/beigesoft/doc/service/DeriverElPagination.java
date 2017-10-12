@@ -52,14 +52,15 @@ public class DeriverElPagination<WI>
     Integer totalPg = pPaging.getDocument().getPages().size();
     String fntNm = pPaging.getDocument().getFonts()
       .get(pPaging.getFontNumber() - 1).getItsName();
+    Integer numberPg = pPaging.getStart();
     for (Integer pgNum = pPaging.getDocument().getPages()
       .indexOf(pPaging.getStartPage()) + 1; pgNum <= totalPg; pgNum++) {
       // String:
       String str;
       if (pPaging.getTitle() == null) {
-        str = pgNum.toString() + pPaging.getFrom() + totalPg;
+        str = numberPg.toString() + pPaging.getFrom() + totalPg;
       } else {
-        str = pPaging.getTitle() + pgNum + pPaging.getFrom() + totalPg;
+        str = pPaging.getTitle() + numberPg + pPaging.getFrom() + totalPg;
       }
       // Positions:
       DocPage<WI> docPg = pPaging.getDocument().getPages().get(pgNum - 1);
@@ -74,11 +75,11 @@ public class DeriverElPagination<WI>
         pPaging.setX1(docPg.getWidth() - docPg.getMarginRight()
           - ms.getWidth());
       } else if (EAlignHorizontal.CENTER.equals(pPaging.getAlignHorizontal())) {
-        pPaging.setX1((docPg.getWidth() - ms.getWidth()) / 2);
+        pPaging.setX1((docPg.getWidth() - ms.getWidth()) / 2.0);
       }
       pPaging.setX2(pPaging.getX1() + ms.getWidth());
-      pPaging.setY1(docPg.getHeight() - docPg.getMarginBottom() / 2
-        - pPaging.getFontSize() / 2);
+      pPaging.setY1(docPg.getHeight() - docPg.getMarginBottom() / 2.0
+        - pPaging.getFontSize() / 2.0);
       pPaging.setY2(pPaging.getY1() + pPaging.getFontSize());
       // Generate:
       DocString<WI> dstr = this.elementFactory.createDocString(pPaging);
@@ -90,6 +91,7 @@ public class DeriverElPagination<WI>
       dstr.setFontSize(pPaging.getFontSize());
       dstr.setValue(str);
       docPg.getElements().add(dstr);
+      numberPg++;
     }
   }
 

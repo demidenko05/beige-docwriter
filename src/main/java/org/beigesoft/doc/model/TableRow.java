@@ -46,12 +46,31 @@ public class TableRow extends ADocContainer {
   }
 
   /**
-   * <p>Constructor for header row.</p>
+   * <p>Constructor for cloning row.</p>
    * @param pRow reference
    **/
   public TableRow(final TableRow pRow) {
+    this.setPaddingBottom(pRow.getPaddingBottom());
+    this.setPaddingLeft(pRow.getPaddingLeft());
+    this.setPaddingRight(pRow.getPaddingRight());
+    this.setPaddingTop(pRow.getPaddingTop());
+    this.setMarginBottom(pRow.getMarginBottom());
+    this.setMarginLeft(pRow.getMarginLeft());
+    this.setMarginRight(pRow.getMarginRight());
+    this.setMarginTop(pRow.getMarginTop());
+    this.setBorder(pRow.getBorder());
+    this.setWraping(pRow.getWraping());
+    this.setParent(pRow.getParent());
+    this.setAlignHorizontal(pRow.getAlignHorizontal());
     this.height = pRow.getHeight();
+    this.setIsHeightFixed(pRow.getIsHeightFixed());
     this.setWidth(pRow.getWidth());
+    this.setIsWidthFixed(pRow.getIsWidthFixed());
+    this.setWidthInPercentage(pRow.getWidthInPercentage());
+    this.setIsX1Fixed(pRow.getIsX1Fixed());
+    this.setIsX2Fixed(pRow.getIsX2Fixed());
+    this.setIsY1Fixed(pRow.getIsY1Fixed());
+    this.setIsY2Fixed(pRow.getIsY2Fixed());
     this.setX1(pRow.getX1());
     this.setX2(pRow.getX2());
     this.setY1(pRow.getY1());

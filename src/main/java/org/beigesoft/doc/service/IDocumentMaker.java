@@ -148,6 +148,13 @@ public interface IDocumentMaker<WI> {
   void makeDocTableWrapping(DocTable<WI> pTbl) throws Exception;
 
   /**
+   * <p>Add row to the end of DocTable.</p>
+   * @param pTbl document table
+   * @throws Exception an Exception
+   **/
+  void addRowToDocTable(DocTable<WI> pTbl) throws Exception;
+
+  /**
    * <p>Derives elements.</p>
    * @param pDoc Document
    * @throws Exception an Exception
