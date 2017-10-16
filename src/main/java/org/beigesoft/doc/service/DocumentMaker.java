@@ -259,12 +259,6 @@ public class DocumentMaker<WI> implements IDocumentMaker<WI> {
     }
     DocTable<WI> res = this.docTableFactory
       .createDocTable(pDoc, pColumns, pRows);
-    for (TableCell cel : res.getItsCells()) {
-      cel.setIsNotShowBorderBottom(false);
-      cel.setIsNotShowBorderTop(false);
-      cel.setIsNotShowBorderLeft(false);
-      cel.setIsNotShowBorderRight(false);
-    }
     res.setIsThereCellWithCustomBorder(true);
     return res;
   }

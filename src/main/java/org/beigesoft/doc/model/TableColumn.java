@@ -19,4 +19,27 @@ package org.beigesoft.doc.model;
  */
 public class TableColumn extends ADocContainer {
 
+  // to improve performance:
+  /**
+   * <p>If has horizontally merged cells.</p>
+   **/
+  private boolean ifHasHorizontalMerged;
+
+  //SGS:
+  /**
+   * <p>Getter for ifHasHorizontalMerged.</p>
+   * @return boolean
+   **/
+  public final boolean getIfHasHorizontalMerged() {
+    return this.ifHasHorizontalMerged;
+  }
+
+  /**
+   * <p>Setter for ifHasHorizontalMerged.</p>
+   * @param pIfHasHorizontalMerged reference
+   **/
+  public final void setIfHasHorizontalMerged(
+    final boolean pIfHasHorizontalMerged) {
+    this.ifHasHorizontalMerged = pIfHasHorizontalMerged;
+  }
 }

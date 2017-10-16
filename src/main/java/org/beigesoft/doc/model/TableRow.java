@@ -39,6 +39,17 @@ public class TableRow extends ADocContainer {
    **/
   private boolean isHeightFixed;
 
+  // to improve performance:
+  /**
+   * <p>If has vertically merged cells.</p>
+   **/
+  private boolean ifHasVerticalMerged;
+
+  /**
+   * <p>If has horizontally merged cells.</p>
+   **/
+  private boolean ifHasHorizontalMerged;
+
   /**
    * <p>Constructor default.</p>
    **/
@@ -140,5 +151,39 @@ public class TableRow extends ADocContainer {
    **/
   public final void setIsHeightFixed(final boolean pIsHeightFixed) {
     this.isHeightFixed = pIsHeightFixed;
+  }
+
+  /**
+   * <p>Getter for ifHasVerticalMerged.</p>
+   * @return boolean
+   **/
+  public final boolean getIfHasVerticalMerged() {
+    return this.ifHasVerticalMerged;
+  }
+
+  /**
+   * <p>Setter for ifHasVerticalMerged.</p>
+   * @param pIfHasVerticalMerged reference
+   **/
+  public final void setIfHasVerticalMerged(
+    final boolean pIfHasVerticalMerged) {
+    this.ifHasVerticalMerged = pIfHasVerticalMerged;
+  }
+
+  /**
+   * <p>Getter for ifHasHorizontalMerged.</p>
+   * @return boolean
+   **/
+  public final boolean getIfHasHorizontalMerged() {
+    return this.ifHasHorizontalMerged;
+  }
+
+  /**
+   * <p>Setter for ifHasHorizontalMerged.</p>
+   * @param pIfHasHorizontalMerged reference
+   **/
+  public final void setIfHasHorizontalMerged(
+    final boolean pIfHasHorizontalMerged) {
+    this.ifHasHorizontalMerged = pIfHasHorizontalMerged;
   }
 }

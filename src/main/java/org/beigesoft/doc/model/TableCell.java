@@ -47,11 +47,6 @@ public class TableCell extends ADocElement {
   private TableCell mergedCell;
 
   /**
-   * <p>Merged cells list exclude this cell.</p>
-   **/
-  private List<TableCell> mergedCells;
-
-  /**
    * <p>MetricsString from content.</p>
    **/
   private MetricsString metricsString;
@@ -66,22 +61,41 @@ public class TableCell extends ADocElement {
   /**
    * <p>If show top border.</p>
    **/
-  private boolean isNotShowBorderTop;
+  private boolean isShowBorderTop;
 
   /**
    * <p>If show bottom border.</p>
    **/
-  private boolean isNotShowBorderBottom;
+  private boolean isShowBorderBottom;
 
   /**
    * <p>If show left border.</p>
    **/
-  private boolean isNotShowBorderLeft;
+  private boolean isShowBorderLeft;
 
   /**
    * <p>If show right border.</p>
    **/
-  private boolean isNotShowBorderRight;
+  private boolean isShowBorderRight;
+
+  //for improving performance:
+  /**
+   * <p>Merged cells list exclude this cell.</p>
+   **/
+  private List<TableCell> mergedCells;
+
+  /**
+   * <p>Merging master cell.</p>
+   **/
+  private TableCell mergingCell;
+
+  /**
+   * <p>If merged cells are vertically (rows),
+   * false - horizontally (columns).
+   * It means nothing if cell isn't "master-merged cell"
+   * i.e. cell.getMergedCell() == null.</p>
+   **/
+  private boolean isMergedVertically;
 
   //Simple getters and setters:
   /**
@@ -214,70 +228,102 @@ public class TableCell extends ADocElement {
   }
 
   /**
-   * <p>Getter for isNotShowBorderTop.</p>
+   * <p>Getter for isShowBorderTop.</p>
    * @return boolean
    **/
-  public final boolean getIsNotShowBorderTop() {
-    return this.isNotShowBorderTop;
+  public final boolean getIsShowBorderTop() {
+    return this.isShowBorderTop;
   }
 
   /**
-   * <p>Setter for isNotShowBorderTop.</p>
-   * @param pIsNotShowBorderTop reference
+   * <p>Setter for isShowBorderTop.</p>
+   * @param pIsShowBorderTop reference
    **/
-  public final void setIsNotShowBorderTop(
-    final boolean pIsNotShowBorderTop) {
-    this.isNotShowBorderTop = pIsNotShowBorderTop;
+  public final void setIsShowBorderTop(
+    final boolean pIsShowBorderTop) {
+    this.isShowBorderTop = pIsShowBorderTop;
   }
 
   /**
-   * <p>Getter for isNotShowBorderBottom.</p>
+   * <p>Getter for isShowBorderBottom.</p>
    * @return boolean
    **/
-  public final boolean getIsNotShowBorderBottom() {
-    return this.isNotShowBorderBottom;
+  public final boolean getIsShowBorderBottom() {
+    return this.isShowBorderBottom;
   }
 
   /**
-   * <p>Setter for isNotShowBorderBottom.</p>
-   * @param pIsNotShowBorderBottom reference
+   * <p>Setter for isShowBorderBottom.</p>
+   * @param pIsShowBorderBottom reference
    **/
-  public final void setIsNotShowBorderBottom(
-    final boolean pIsNotShowBorderBottom) {
-    this.isNotShowBorderBottom = pIsNotShowBorderBottom;
+  public final void setIsShowBorderBottom(
+    final boolean pIsShowBorderBottom) {
+    this.isShowBorderBottom = pIsShowBorderBottom;
   }
 
   /**
-   * <p>Getter for isNotShowBorderLeft.</p>
+   * <p>Getter for isShowBorderLeft.</p>
    * @return boolean
    **/
-  public final boolean getIsNotShowBorderLeft() {
-    return this.isNotShowBorderLeft;
+  public final boolean getIsShowBorderLeft() {
+    return this.isShowBorderLeft;
   }
 
   /**
-   * <p>Setter for isNotShowBorderLeft.</p>
-   * @param pIsNotShowBorderLeft reference
+   * <p>Setter for isShowBorderLeft.</p>
+   * @param pIsShowBorderLeft reference
    **/
-  public final void setIsNotShowBorderLeft(
-    final boolean pIsNotShowBorderLeft) {
-    this.isNotShowBorderLeft = pIsNotShowBorderLeft;
+  public final void setIsShowBorderLeft(
+    final boolean pIsShowBorderLeft) {
+    this.isShowBorderLeft = pIsShowBorderLeft;
   }
 
   /**
-   * <p>Getter for isNotShowBorderRight.</p>
+   * <p>Getter for isShowBorderRight.</p>
    * @return boolean
    **/
-  public final boolean getIsNotShowBorderRight() {
-    return this.isNotShowBorderRight;
+  public final boolean getIsShowBorderRight() {
+    return this.isShowBorderRight;
   }
 
   /**
-   * <p>Setter for isNotShowBorderRight.</p>
-   * @param pIsNotShowBorderRight reference
+   * <p>Setter for isShowBorderRight.</p>
+   * @param pIsShowBorderRight reference
    **/
-  public final void setIsNotShowBorderRight(
-    final boolean pIsNotShowBorderRight) {
-    this.isNotShowBorderRight = pIsNotShowBorderRight;
+  public final void setIsShowBorderRight(
+    final boolean pIsShowBorderRight) {
+    this.isShowBorderRight = pIsShowBorderRight;
+  }
+
+  /**
+   * <p>Getter for mergingCell.</p>
+   * @return TableCell
+   **/
+  public final TableCell getMergingCell() {
+    return this.mergingCell;
+  }
+
+  /**
+   * <p>Setter for mergingCell.</p>
+   * @param pMergingCell reference
+   **/
+  public final void setMergingCell(final TableCell pMergingCell) {
+    this.mergingCell = pMergingCell;
+  }
+
+  /**
+   * <p>Getter for isMergedVertically.</p>
+   * @return boolean
+   **/
+  public final boolean getIsMergedVertically() {
+    return this.isMergedVertically;
+  }
+
+  /**
+   * <p>Setter for isMergedVertically.</p>
+   * @param pIsMergedVertically reference
+   **/
+  public final void setIsMergedVertically(final boolean pIsMergedVertically) {
+    this.isMergedVertically = pIsMergedVertically;
   }
 }

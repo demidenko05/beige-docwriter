@@ -41,6 +41,16 @@ public class DocTableTest<WI> {
 
   @Test
   public void test1() throws Exception {
+    int columnsCount = 3;
+    int rowsCount = 3;
+    int cellIdx0 = 0;
+    int cellIdx4 = 4;
+    //cell's column idx:
+    assertEquals(0, (cellIdx0 + columnsCount) % columnsCount);
+    assertEquals(1, (cellIdx4 + columnsCount) % columnsCount);
+    //cell's row idx:
+    assertEquals(0, cellIdx0 / columnsCount);
+    assertEquals(1, cellIdx4 / columnsCount);
     EvalCharWidthTst evalCharWidth = new EvalCharWidthTst();
     EvalMetricsString evalMetricsString = new EvalMetricsString();
     evalMetricsString.setEvalCharWidth(evalCharWidth);
