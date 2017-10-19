@@ -1,7 +1,7 @@
 package org.beigesoft.doc.service;
 
 /*
- * Copyright (c) 2015-2017 Beigesoft ™
+ * Copyright (c) 2017 Beigesoft ™
  *
  * Licensed under the GNU General Public License (GPL), Version 2.0
  * (the "License");
@@ -31,6 +31,7 @@ import org.beigesoft.doc.model.TableColumn;
 import org.beigesoft.doc.model.IElement;
 import org.beigesoft.doc.model.DocPage;
 import org.beigesoft.doc.model.DocString;
+import org.beigesoft.doc.model.DocImage;
 import org.beigesoft.doc.model.Pagination;
 import org.beigesoft.doc.model.IDerivingElements;
 
@@ -361,6 +362,26 @@ public class DocumentMaker<WI> implements IDocumentMaker<WI> {
     for (IDerivingElements de : pDoc.getDerivingElementsList()) {
       de.derive();
     }
+  }
+
+  /**
+   * <p>Add image into current page from file (file system or resource) with
+   * X Y coordinates in current units.</p>
+   * @param pDoc Document
+   * @param pPath path e.g. /img/image1.png or /home/jon/pictures/photo1.jpg
+   * @param pX x
+   * @param pY y
+   * @return DocImage<WI>
+   * @throws Exception an Exception
+   **/
+  @Override
+  public final DocImage<WI> addImage(final Document<WI> pDoc,
+    final String pPath, final double pX, final double pY) throws Exception {
+    DocImage<WI> dimg = this.elementFactory.createDocImage(null, pPath);
+    dimg.setX1(pX);
+    dimg.setY1(pY);
+    pDoc.getPages().get(pDoc.getPageNumber() - 1).getElements().add(dimg);
+    return dimg;
   }
 
   //Simple getters and setters:

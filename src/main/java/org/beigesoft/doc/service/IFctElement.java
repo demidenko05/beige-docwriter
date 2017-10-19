@@ -1,7 +1,7 @@
 package org.beigesoft.doc.service;
 
 /*
- * Copyright (c) 2015-2017 Beigesoft ™
+ * Copyright (c) 2017 Beigesoft ™
  *
  * Licensed under the GNU General Public License (GPL), Version 2.0
  * (the "License");
@@ -15,6 +15,7 @@ package org.beigesoft.doc.service;
 import org.beigesoft.doc.model.DocString;
 import org.beigesoft.doc.model.DocLine;
 import org.beigesoft.doc.model.DocRectangle;
+import org.beigesoft.doc.model.DocImage;
 import org.beigesoft.doc.model.IDerivingElements;
 
 /**
@@ -49,4 +50,14 @@ public interface IFctElement<WI> {
    **/
   DocRectangle<WI> createDocRectangle(
     IDerivingElements pParent) throws Exception;
+
+  /**
+   * <p>Create document image from file (file system or resource).</p>
+   * @param pParent parent
+   * @param pPath path e.g. /img/image1.png or /home/jon/pictures/photo1.jpg
+   * @return DocImage
+   * @throws Exception an Exception
+   **/
+  DocImage<WI> createDocImage(IDerivingElements pParent,
+    String pPath) throws Exception;
 }

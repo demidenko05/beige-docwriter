@@ -1,7 +1,7 @@
 package org.beigesoft.doc.service;
 
 /*
- * Copyright (c) 2015-2017 Beigesoft ™
+ * Copyright (c) 2017 Beigesoft ™
  *
  * Licensed under the GNU General Public License (GPL), Version 2.0
  * (the "License");
@@ -12,9 +12,11 @@ package org.beigesoft.doc.service;
  * http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
  */
 
+import org.beigesoft.graphic.service.IFctImageRgb;
 import org.beigesoft.doc.model.DocString;
 import org.beigesoft.doc.model.DocLine;
 import org.beigesoft.doc.model.DocRectangle;
+import org.beigesoft.doc.model.DocImage;
 import org.beigesoft.doc.model.IDerivingElements;
 
 /**
@@ -39,6 +41,16 @@ public class FctElement<WI> implements IFctElement<WI> {
    * <p>Rectangle Writer service.</p>
    **/
   private IElementWriter<DocRectangle<WI>, WI> writerRectangle;
+
+  /**
+   * <p>Image Writer service.</p>
+   **/
+  private IElementWriter<DocImage<WI>, WI> writerImage;
+
+  /**
+   * <p>Image loader from file.</p>
+   **/
+  private IFctImageRgb fctImageRgb;
 
   /**
    * <p>Create document string.</p>
@@ -81,6 +93,23 @@ public class FctElement<WI> implements IFctElement<WI> {
     final IDerivingElements pParent) throws Exception {
     DocRectangle<WI> res = new DocRectangle<WI>();
     res.setWriter(this.writerRectangle);
+    res.setParent(pParent);
+    return res;
+  }
+
+  /**
+   * <p>Create document image from file (file system or resource).</p>
+   * @param pParent parent
+   * @param pPath path e.g. /img/image1.png or /home/jon/pictures/photo1.jpg
+   * @return DocImage
+   * @throws Exception an Exception
+   **/
+  @Override
+  public final DocImage<WI> createDocImage(final IDerivingElements pParent,
+    final String pPath) throws Exception {
+    DocImage<WI> res = new DocImage<WI>();
+    res.setImage(this.fctImageRgb.loadImage(pPath));
+    res.setWriter(this.writerImage);
     res.setParent(pParent);
     return res;
   }
@@ -135,5 +164,38 @@ public class FctElement<WI> implements IFctElement<WI> {
   public final void setWriterRectangle(
     final IElementWriter<DocRectangle<WI>, WI> pWriterRectangle) {
     this.writerRectangle = pWriterRectangle;
+  }
+
+  /**
+   * <p>Getter for writerImage.</p>
+   * @return IElementWriter<DocImage>
+   **/
+  public final IElementWriter<DocImage<WI>, WI> getWriterImage() {
+    return this.writerImage;
+  }
+
+  /**
+   * <p>Setter for writerImage.</p>
+   * @param pWriterImage reference
+   **/
+  public final void setWriterImage(
+    final IElementWriter<DocImage<WI>, WI> pWriterImage) {
+    this.writerImage = pWriterImage;
+  }
+
+  /**
+   * <p>Getter for fctImageRgb.</p>
+   * @return IFctImageRgb
+   **/
+  public final IFctImageRgb getFctImageRgb() {
+    return this.fctImageRgb;
+  }
+
+  /**
+   * <p>Setter for fctImageRgb.</p>
+   * @param pFctImageRgb reference
+   **/
+  public final void setFctImageRgb(final IFctImageRgb pFctImageRgb) {
+    this.fctImageRgb = pFctImageRgb;
   }
 }

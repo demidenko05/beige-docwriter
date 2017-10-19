@@ -11,10 +11,7 @@
  */
 
 /**
- * <p>
- * Contains of exceptions.
- * </p>
- *
+ * <p>Cross-platform graphics services.</p>
  * @author Yury Demidenko
  */
-package org.beigesoft.doc.exception;
+package org.beigesoft.graphic.service;

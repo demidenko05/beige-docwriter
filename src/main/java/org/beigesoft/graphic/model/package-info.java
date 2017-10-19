@@ -11,10 +11,7 @@
  */
 
 /**
- * <p>
- * Contains of exceptions.
- * </p>
- *
+ * <p>Cross-platform graphics models (data).</p>
  * @author Yury Demidenko
  */
-package org.beigesoft.doc.exception;
+package org.beigesoft.graphic.model;

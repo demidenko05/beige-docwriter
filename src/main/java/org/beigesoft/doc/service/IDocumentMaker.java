@@ -1,7 +1,7 @@
 package org.beigesoft.doc.service;
 
 /*
- * Copyright (c) 2015-2017 Beigesoft ™
+ * Copyright (c) 2017 Beigesoft ™
  *
  * Licensed under the GNU General Public License (GPL), Version 2.0
  * (the "License");
@@ -14,6 +14,7 @@ package org.beigesoft.doc.service;
 
 import org.beigesoft.doc.model.Document;
 import org.beigesoft.doc.model.DocTable;
+import org.beigesoft.doc.model.DocImage;
 import org.beigesoft.doc.model.EPageSize;
 import org.beigesoft.doc.model.EPageOrientation;
 import org.beigesoft.doc.model.Pagination;
@@ -160,4 +161,17 @@ public interface IDocumentMaker<WI> {
    * @throws Exception an Exception
    **/
   void deriveElements(Document<WI> pDoc) throws Exception;
+
+  /**
+   * <p>Add image into current page from file (file system or resource) with
+   * X Y coordinates in current units.</p>
+   * @param pDoc Document
+   * @param pPath path e.g. /img/image1.png or /home/jon/pictures/photo1.jpg
+   * @param pX x
+   * @param pY y
+   * @return DocImage<WI>
+   * @throws Exception an Exception
+   **/
+  DocImage<WI> addImage(Document<WI> pDoc, String pPath,
+    double pX, double pY) throws Exception;
 }
