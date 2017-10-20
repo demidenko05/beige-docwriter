@@ -33,12 +33,22 @@ public class DocImage<WI> extends AElement<DocImage<WI>, WI> {
   private double scale = 1.0;
 
   /**
+   * <p>Rotate on degrees, 0 default no rotation.</p>
+   **/
+  private double rotateDegrees = 0.0;
+
+  /**
+   * <p>Index group for ordering.</p>
+   **/
+  private int indexGroup = 9999;
+
+  /**
    * <p>Getter for Index group for ordering.</p>
    * @return Index Group
    **/
   @Override
   public final int getIndexGroup() {
-    return 9999;
+    return this.indexGroup;
   }
 
   //Simple getters and setters:
@@ -72,5 +82,29 @@ public class DocImage<WI> extends AElement<DocImage<WI>, WI> {
    **/
   public final void setScale(final double pScale) {
     this.scale = pScale;
+  }
+
+  /**
+   * <p>Getter for rotateDegrees.</p>
+   * @return double
+   **/
+  public final double getRotateDegrees() {
+    return this.rotateDegrees;
+  }
+
+  /**
+   * <p>Setter for rotateDegrees.</p>
+   * @param pRotateDegrees reference
+   **/
+  public final void setRotateDegrees(final double pRotateDegrees) {
+    this.rotateDegrees = pRotateDegrees;
+  }
+
+  /**
+   * <p>Setter for indexGroup.</p>
+   * @param pIndexGroup reference
+   **/
+  public final void setIndexGroup(final int pIndexGroup) {
+    this.indexGroup = pIndexGroup;
   }
 }

@@ -959,7 +959,7 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
           borderHt = col.getBorder();
         }
         double wd = col.getPaddingLeft() + cel.getMetricsString().getWidth()
-          + col.getPaddingLeft() + borderWd;
+          + col.getPaddingRight() + borderWd;
         double ht = row.getPaddingTop() + cel.getMetricsString().getHeight()
           + row.getPaddingBottom() + borderHt;
         if (!cel.getIsMergedVertically()) { // merged columns:
@@ -1052,7 +1052,7 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
               fntNm, cel.getFontSize(), pMaxWidth, 0.0);
             cel.setMetricsString(ms);
             double wd = col.getPaddingLeft() + ms.getWidth()
-              + col.getPaddingLeft() + borderWd;
+              + col.getPaddingRight() + borderWd;
             if (col.getWidth() < wd) {
               col.setWidth(wd);
             }
