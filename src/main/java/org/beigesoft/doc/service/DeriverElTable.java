@@ -548,15 +548,15 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
     }
     double tblWidth = pTbl.getX2() - pTbl.getX1();
     double wd100pr = tblWidth - fixedColWd;
-    if (wd100pr < 0.0) {
+    if (wd100pr < -0.0001) {
       throw new ExceptionBdw("Wrong fixed column widths: tbl/cols "
         + tblWidth + "/" + fixedColWd);
     }
-    if (wd100pr < 0.0001 && (fixedPrColWdPr > 2.0 || floatColCn > 0)) {
+    if (wd100pr < -0.0001 && (fixedPrColWdPr > 2.0 || floatColCn > 0)) {
       throw new ExceptionBdw("Wrong fixed column widths: tbl/cols "
         + tblWidth + "/" + fixedColWd);
     }
-    if (fixedPrColWdPr > 100.0) {
+    if (fixedPrColWdPr > 100.0001) {
       throw new ExceptionBdw("Wrong fixed column percentage widths: "
         + fixedPrColWdPr);
     }
