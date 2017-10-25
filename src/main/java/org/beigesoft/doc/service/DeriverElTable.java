@@ -189,14 +189,16 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
    * @param pTbl table
    * @param pRow Row
    * @param pPgNum Page Number
+   * @param pRowIdxOri row index in main table
    * @throws Exception an Exception
    **/
   public final void addBottomCellsLines(final DocTable<WI> pTbl,
-    final TableRow pRow, final Integer pPgNum) throws Exception {
+    final TableRow pRow, final Integer pPgNum,
+      final Integer pRowIdxOri) throws Exception {
     int colCnt = pTbl.getItsColumns().size();
     TableCell startCel = null;
     TableCell endCel = null;
-    int startIdx = pTbl.getItsRows().indexOf(pRow) * colCnt;
+    int startIdx = pRowIdxOri * colCnt;
     for (int celIdx = startIdx; celIdx < startIdx + colCnt; celIdx++) {
       TableCell cel = pTbl.getItsCells().get(celIdx);
       if (cel.getMergedCell() != null && cel.getIsMergedVertically()) {
@@ -313,31 +315,33 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
     int colCnt = pTbl.getItsColumns().size();
     int rowIdx = 0;
     for (TableRow row : pRows) {
-      boolean needLn = true;
-      if (pCol.getIfHasHorizontalMerged()) {
-        TableCell cel = pTbl.getItsCells().get(rowIdx * colCnt + pColIdx);
-        if (cel.getMergedCell() != null && !cel.getIsMergedVertically()) {
-          needLn = false;
-        } else if (cel.getIsMerged()) {
-          TableCell mscel = cel.getMergingCell();
-          if (!mscel.getIsMergedVertically() && !cel.equals(mscel
-            .getMergedCells().get(mscel.getMergedCells().size() - 1))) {
+      if (!row.getIfHasCustomBordersBelow()) {
+        boolean needLn = true;
+        if (pCol.getIfHasHorizontalMerged()) {
+          TableCell cel = pTbl.getItsCells().get(rowIdx * colCnt + pColIdx);
+          if (cel.getMergedCell() != null && !cel.getIsMergedVertically()) {
             needLn = false;
+          } else if (cel.getIsMerged()) {
+            TableCell mscel = cel.getMergingCell();
+            if (!mscel.getIsMergedVertically() && !cel.equals(mscel
+              .getMergedCells().get(mscel.getMergedCells().size() - 1))) {
+              needLn = false;
+            }
           }
         }
-      }
-      if (needLn) {
-        DocLine<WI> dlnr = this.elementFactory.createDocLine(pTbl);
-        dlnr.setWidth(pTbl.getBorder());
-        dlnr.setX1(pCol.getX2());
-        dlnr.setY1(row.getY1());
-        dlnr.setX2(pCol.getX2());
-        dlnr.setY2(row.getY2());
-        Integer pgNum = pPgNum;
-        if (pgNum == null) {
-          pgNum = row.getPageNumber();
+        if (needLn) {
+          DocLine<WI> dlnr = this.elementFactory.createDocLine(pTbl);
+          dlnr.setWidth(pTbl.getBorder());
+          dlnr.setX1(pCol.getX2());
+          dlnr.setY1(row.getY1());
+          dlnr.setX2(pCol.getX2());
+          dlnr.setY2(row.getY2());
+          Integer pgNum = pPgNum;
+          if (pgNum == null) {
+            pgNum = row.getPageNumber();
+          }
+          pTbl.getDocument().getPages().get(pgNum - 1).getElements().add(dlnr);
         }
-        pTbl.getDocument().getPages().get(pgNum - 1).getElements().add(dlnr);
       }
       rowIdx++;
     }
@@ -377,8 +381,17 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
             dstr.setX1(col.getX2() - pTbl.getBorder() - col.getPaddingRight()
               - cel.getMetricsString().getWidths().get(i));
           } else if (EAlignHorizontal.CENTER.equals(cel.getAlignHorizontal())) {
+            double colWd = col.getWidth();
+            if (cel.getMergedCell() != null && !cel.getIsMergedVertically()) {
+              for (TableCell mcel : cel.getMergedCells()) {
+                int mcelIdx = pTbl.getItsCells().indexOf(mcel);
+                TableColumn mcol = pTbl.getItsColumns()
+                  .get((mcelIdx + colCnt) % colCnt);
+                colWd += mcol.getWidth() + col.getBorder();
+              }
+            }
             double dw =
-              (col.getWidth() - cel.getMetricsString().getWidths().get(i)) / 2;
+              (colWd - cel.getMetricsString().getWidths().get(i)) / 2;
             dstr.setX1(col.getX1() + dw);
           }
           dstr.setX2(dstr.getX1() + cel.getMetricsString().getWidth());
@@ -438,7 +451,8 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
             if (!row.getIfHasVerticalMerged()) {
               addBottomRowLine(pTbl, row, pgCurr);
             } else {
-              addBottomCellsLines(pTbl, row, pgCurr);
+              addBottomCellsLines(pTbl, row, pgCurr,
+                pTbl.getRepHeadRows().indexOf(row));
             }
           }
           int colIdx = 0;
@@ -457,18 +471,27 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
       boolean isFirst = true;
       Integer curPgNum = pTbl.getItsRows().get(0).getPageNumber();
       for (TableRow row : pTbl.getItsRows()) {
-        if (isFirst || !curPgNum.equals(row.getPageNumber())
-          && !pTbl.getIsRepeatHead()) {
-          // top row line
-          isFirst = false;
-          curPgNum = row.getPageNumber();
-          addTopRowLine(pTbl, row, row.getPageNumber());
-        }
-        addLeftRightRowLines(pTbl, row, row.getPageNumber());
-        if (!row.getIfHasVerticalMerged()) {
-          addBottomRowLine(pTbl, row, row.getPageNumber());
+        if (!row.getIfHasCustomBordersBelow()) {
+          if (isFirst || !curPgNum.equals(row.getPageNumber())
+            && !pTbl.getIsRepeatHead()) {
+            // top row line
+            isFirst = false;
+            curPgNum = row.getPageNumber();
+            addTopRowLine(pTbl, row, row.getPageNumber());
+          }
+          addLeftRightRowLines(pTbl, row, row.getPageNumber());
+          if (!row.getIfHasVerticalMerged()) {
+            addBottomRowLine(pTbl, row, row.getPageNumber());
+          } else {
+            addBottomCellsLines(pTbl, row, row.getPageNumber(),
+              pTbl.getItsRows().indexOf(row));
+          }
         } else {
-          addBottomCellsLines(pTbl, row, row.getPageNumber());
+          int startIdx = pTbl.getItsRows().indexOf(row) * colCnt;
+          for (int celIdx = startIdx; celIdx < startIdx + colCnt; celIdx++) {
+            TableCell cel = pTbl.getItsCells().get(celIdx);
+            addBordersToCell(pTbl, cel);
+          }
         }
       }
       int colIdx = 0;
@@ -486,33 +509,46 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
       // so usually there are cells that have bottom lines
       // merged cells not supported here!!!
       for (TableCell cel : pTbl.getItsCells()) {
-        if (cel.getIsShowBorderTop() || cel.getIsShowBorderBottom()
-          || cel.getIsShowBorderLeft() || cel.getIsShowBorderRight()) {
-          int celIdx = pTbl.getItsCells().indexOf(cel);
-          int colIdx = (celIdx + colCnt) % colCnt;
-          int rowIdx = celIdx / colCnt;
-          TableColumn col = pTbl.getItsColumns().get(colIdx);
-          TableRow row = pTbl.getItsRows().get(rowIdx);
-          if (cel.getIsShowBorderTop()) {
-            addLine(pTbl, col.getX1(), row.getY1(), col.getX2(),
-              row.getY1(), row.getBorder(), row.getPageNumber());
-          }
-          if (cel.getIsShowBorderBottom()) {
-            addLine(pTbl, col.getX1(), row.getY2(), col.getX2(),
-              row.getY2(), row.getBorder(), row.getPageNumber());
-          }
-          if (cel.getIsShowBorderLeft()) {
-            addLine(pTbl, col.getX1(), row.getY1(), col.getX1(),
-              row.getY2(), row.getBorder(), row.getPageNumber());
-          }
-          if (cel.getIsShowBorderRight()) {
-            addLine(pTbl, col.getX2(), row.getY1(), col.getX2(),
-              row.getY2(), row.getBorder(), row.getPageNumber());
-          }
-        }
+        addBordersToCell(pTbl, cel);
       }
     }
     generateStrings(pTbl, pTbl.getItsCells(), pTbl.getItsRows(), null);
+  }
+
+
+  /**
+   * <p>Add custom borders to cell.</p>
+   * @param pTbl table
+   * @param pCel cel
+   * @throws Exception an Exception
+   **/
+  public final void addBordersToCell(
+    final DocTable<WI> pTbl, final TableCell pCel) throws Exception {
+    int colCnt = pTbl.getItsColumns().size();
+    if (pCel.getIsShowBorderTop() || pCel.getIsShowBorderBottom()
+      || pCel.getIsShowBorderLeft() || pCel.getIsShowBorderRight()) {
+      int celIdx = pTbl.getItsCells().indexOf(pCel);
+      int colIdx = (celIdx + colCnt) % colCnt;
+      int rowIdx = celIdx / colCnt;
+      TableColumn col = pTbl.getItsColumns().get(colIdx);
+      TableRow row = pTbl.getItsRows().get(rowIdx);
+      if (pCel.getIsShowBorderTop()) {
+        addLine(pTbl, col.getX1(), row.getY1(), col.getX2(),
+          row.getY1(), row.getBorder(), row.getPageNumber());
+      }
+      if (pCel.getIsShowBorderBottom()) {
+        addLine(pTbl, col.getX1(), row.getY2(), col.getX2(),
+          row.getY2(), row.getBorder(), row.getPageNumber());
+      }
+      if (pCel.getIsShowBorderLeft()) {
+        addLine(pTbl, col.getX1(), row.getY1(), col.getX1(),
+          row.getY2(), row.getBorder(), row.getPageNumber());
+      }
+      if (pCel.getIsShowBorderRight()) {
+        addLine(pTbl, col.getX2(), row.getY1(), col.getX2(),
+          row.getY2(), row.getBorder(), row.getPageNumber());
+      }
+    }
   }
 
   /**
@@ -863,20 +899,6 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
    * <p>Evaluate wrapped and merged columns width.</p>
    * @param pTbl table
    * @param pCel current cell
-   * @param pRow current row
-   * @param pHeight height
-   * @throws Exception an Exception
-   **/
-  public final void evalWrappedMergedRowsHeight(
-    final DocTable<WI> pTbl, final TableCell pCel,
-      final TableRow pRow, final double pHeight) throws Exception {
-    throw new ExceptionBdw("Wrapped rows height not yet implemented!");
-  }
-
-  /**
-   * <p>Evaluate wrapped and merged columns width.</p>
-   * @param pTbl table
-   * @param pCel current cell
    * @param pCol current column
    * @param pWidth width
    * @throws Exception an Exception
@@ -972,8 +994,6 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
           if (col.getWidth() < wd) {
             col.setWidth(wd);
           }
-          evalWrappedMergedRowsHeight(pTbl, cel, row, ht
-            + (col.getBorder() * cel.getMergedCells().size()));
         }
       }
       colIdx++;
@@ -1028,6 +1048,13 @@ public class DeriverElTable<WI> implements IDeriverElements<WI, DocTable<WI>> {
           borderHt = col.getBorder();
         }
         if (cel.getMergedCell() != null) {
+          if (EWraping.WRAP_CONTENT.equals(col.getWraping())) {
+            String fntNm = pTbl.getDocument().getFonts()
+              .get(cel.getFontNumber() - 1).getItsName();
+            MetricsString ms = this.evalMetricsString.eval(cel.getItsContent(),
+              fntNm, cel.getFontSize(), pMaxWidth, 0.0);
+            cel.setMetricsString(ms);
+          }
           if (!wasMergedWrapped) {
             wasMergedWrapped = evalMergedCells(pTbl, cel, col,
               celIdx, rowIdx, colIdx);

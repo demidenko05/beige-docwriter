@@ -53,15 +53,18 @@ public class DeriverElPagination<WI>
     String fntNm = pPaging.getDocument().getFonts()
       .get(pPaging.getFontNumber() - 1).getItsName();
     Integer numberPg = pPaging.getStart();
-    for (Integer pgNum = pPaging.getDocument().getPages()
-      .indexOf(pPaging.getStartPage()) + 1; pgNum <= totalPg; pgNum++) {
+    for (Integer pgNum = pPaging.getStart(); pgNum <= totalPg; pgNum++) {
       // String:
-      String str;
+      StringBuffer sb = new StringBuffer();
       if (pPaging.getTitle() == null) {
-        str = numberPg.toString() + pPaging.getFrom() + totalPg;
+        sb.append(numberPg.toString());
       } else {
-        str = pPaging.getTitle() + numberPg + pPaging.getFrom() + totalPg;
+        sb.append(pPaging.getTitle() + numberPg);
       }
+      if (pPaging.getFrom() != null) {
+        sb.append(pPaging.getFrom() + totalPg);
+      }
+      String str = sb.toString();
       // Positions:
       DocPage<WI> docPg = pPaging.getDocument().getPages().get(pgNum - 1);
       double wd = docPg.getWidth() - docPg.getMarginLeft()

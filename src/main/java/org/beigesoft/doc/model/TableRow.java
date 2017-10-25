@@ -39,6 +39,12 @@ public class TableRow extends ADocContainer {
    **/
   private boolean isHeightFixed;
 
+  /**
+   * <p>If has cells with custom borders below.
+   * This is for implementing the next result rows.</p>
+   **/
+  private boolean ifHasCustomBordersBelow;
+
   // to improve performance:
   /**
    * <p>If has vertically merged cells.</p>
@@ -86,6 +92,8 @@ public class TableRow extends ADocContainer {
     this.setX2(pRow.getX2());
     this.setY1(pRow.getY1());
     this.setY2(pRow.getY2());
+    this.setIfHasHorizontalMerged(pRow.getIfHasHorizontalMerged());
+    this.setIfHasVerticalMerged(pRow.getIfHasVerticalMerged());
   }
 
   //Simple getters and setters:
@@ -151,6 +159,23 @@ public class TableRow extends ADocContainer {
    **/
   public final void setIsHeightFixed(final boolean pIsHeightFixed) {
     this.isHeightFixed = pIsHeightFixed;
+  }
+
+  /**
+   * <p>Getter for ifHasCustomBordersBelow.</p>
+   * @return boolean
+   **/
+  public final boolean getIfHasCustomBordersBelow() {
+    return this.ifHasCustomBordersBelow;
+  }
+
+  /**
+   * <p>Setter for ifHasCustomBordersBelow.</p>
+   * @param pIfHasCustomBordersBelow reference
+   **/
+  public final void setIfHasCustomBordersBelow(
+    final boolean pIfHasCustomBordersBelow) {
+    this.ifHasCustomBordersBelow = pIfHasCustomBordersBelow;
   }
 
   /**
