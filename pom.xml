@@ -4,11 +4,15 @@
 
   <groupId>org.beigesoft</groupId>
   <artifactId>beige-docwriter</artifactId>
-  <version>1.0.1-SNAPSHOT</version>
+  <version>1.0.0-SNAPSHOT</version>
   <inceptionYear>2017</inceptionYear>
 
   <name>Beigesoft ™ Document Writer library.</name>
   <url>http://www.beigesoft.org</url>
+  <description>This is base cross-platform document creation logic, i.e. add page, table, text,
+    image etc. Writing this document to concrete platform file (e.g. PDF),
+    interactive editing or viewing on screen should be implemented with concrete
+    platform-dependent writer (PDF/Swing/GTK), e.g. Beigesoft ™ PDFWriter.</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
