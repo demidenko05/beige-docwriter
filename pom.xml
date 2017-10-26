@@ -4,7 +4,7 @@
 
   <groupId>org.beigesoft</groupId>
   <artifactId>beige-docwriter</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <inceptionYear>2017</inceptionYear>
 
   <name>Beigesoft ™ Document Writer library.</name>
@@ -268,7 +268,7 @@
     <url>https://github.com/demidenko05/beige-docwriter.git</url>
     <connection>scm:git:git@github.com:demidenko05/beige-docwriter.git</connection>
     <developerConnection>scm:git:git@github.com:demidenko05/beige-docwriter.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>beige-docwriter-1.0.0</tag>
   </scm>
 
 </project>
