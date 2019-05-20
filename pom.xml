@@ -12,7 +12,7 @@
   <description>This is base cross-platform document creation logic, i.e. add page, table, text,
     image etc. Writing this document to concrete platform file (e.g. PDF),
     interactive editing or viewing on screen should be implemented with concrete
-    platform-dependent writer (PDF/Swing/GTK), e.g. Beigesoft ™ PDFWriter.</description>
+    platform-dependent writer (PDF/Swing/GTK), e.g. Beigesoft™ PDFWriter.</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -165,8 +165,8 @@
   <dependencies>
     <dependency>
      <groupId>org.beigesoft</groupId>
-     <artifactId>beige-log-base</artifactId>
-     <version>1.0-SNAPSHOT</version>
+     <artifactId>beige-logging-base</artifactId>
+     <version>1.0.3-SNAPSHOT</version>
     </dependency>
     <dependency>
      <groupId>junit</groupId>
@@ -253,8 +253,8 @@
 
   <licenses>
     <license>
-      <name>GNU General Public License version 2</name>
-      <url>http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html</url>
+      <name>BSD 2-Clause License</name>
+      <url>https://sites.google.com/site/beigesoftware/bsd2csl</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
