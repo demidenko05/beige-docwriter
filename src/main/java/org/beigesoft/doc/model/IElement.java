@@ -90,7 +90,7 @@ public interface IElement<WI> {
    * to store its width/height.</p>
    * @param pY2 value
    **/
-  void setY2(final double pY2);
+  void setY2(double pY2);
 
   /**
    * <p>Getter for Index Z.</p>
